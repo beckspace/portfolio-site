@@ -1,0 +1,212 @@
+/* About Section */
+.about-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+.about-image {
+    position: relative;
+    z-index: 1;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+}
+
+.about-image-frame {
+    width: 100%;
+    height: 500px;
+    background-color: var(--card-bg);
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    transform: rotateY(-5deg);
+    transition: transform 0.5s ease, box-shadow 0.5s ease;
+    border: 1px solid rgba(62, 111, 255, 0.3);
+}
+
+.about-image-frame::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+        linear-gradient(45deg, transparent 48%, rgba(62, 111, 255, 0.3) 50%, transparent 52%),
+        linear-gradient(-45deg, transparent 48%, rgba(166, 77, 255, 0.3) 50%, transparent 52%);
+    background-size: 30px 30px;
+    opacity: 0.3;
+    z-index: 1;
+}
+
+.about-image-frame:hover {
+    transform: rotateY(0deg);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), 0 0 30px rgba(62, 111, 255, 0.2);
+}
+
+.placeholder-image {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--card-bg), var(--bg-secondary));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 0;
+    overflow: hidden;
+    background-image: url("/shared/images/about-me.png");
+        background-size: cover;
+}
+
+/* .placeholder-content {
+    position: relative;
+    top:-40%;
+    z-index: 2;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: 2px;
+    text-shadow: 0 0 20px rgba(62, 111, 255, 0.5);
+    display: flex;
+
+    flex-direction: column;
+    align-items: center;
+} */
+
+.placeholder-image::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 200px;
+    height: 200px;
+    /* background: radial-gradient(circle, rgba(62, 111, 255, 0.3), transparent 70%); */
+    border-radius: 50%;
+    /* animation: pulse 3s infinite; */
+    z-index: 1;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-top: 1rem;
+    color: var(--accent-primary);
+}
+
+.about-text {
+    position: relative;
+    z-index: 1;
+}
+
+.about-text p {
+    margin-bottom: 1.5rem;
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    position: relative;
+    padding-left: 1rem;
+}
+
+.about-text p::before {
+    content: '';
+    position: absolute;
+    top: 0.5rem;
+    left: 0;
+    width: 3px;
+    height: calc(100% - 1rem);
+    background: linear-gradient(to bottom, var(--accent-primary), var(--accent-secondary));
+    border-radius: 3px;
+}
+
+/* Skill Badges */
+.skills-container {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.skills-title {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--accent-primary);
+}
+
+.skills-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.skill-badge {
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, rgba(62, 111, 255, 0.1), rgba(166, 77, 255, 0.1));
+    border: 1px solid rgba(62, 111, 255, 0.3);
+    border-radius: 50px;
+    padding: 0.5rem 1rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.skill-badge::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(62, 111, 255, 0.4), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 0;
+    transform: scale(0.5);
+}
+
+.skill-badge:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(62, 111, 255, 0.3);
+    background: linear-gradient(135deg, rgba(62, 111, 255, 0.2), rgba(166, 77, 255, 0.2));
+}
+
+.skill-badge:hover::before {
+    opacity: 1;
+    animation: pulse 2s infinite;
+}
+
+.skill-badge-icon,
+.skill-badge-name {
+    position: relative;
+    z-index: 1;
+}
+
+.skill-badge-icon {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--accent-primary);
+    margin-right: 0.5rem;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.skill-badge-name {
+    font-size: 0.9rem;
+    color: var(--text-primary);
+}
+
+.level-indicator {
+    display: inline-flex;
+    align-items: center;
+    margin-left: 10px;
+    padding: 0.2rem 0.6rem;
+    background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+    border-radius: 20px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 0.8rem;
+    color: var(--text-primary);
+    box-shadow: 0 0 10px var(--accent-glow);
+}

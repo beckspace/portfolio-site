@@ -1,0 +1,164 @@
+/* 
+ * Component Compatibility CSS
+ * This file fixes compatibility issues between the original CSS and the component structure
+ */
+
+/* Make component containers transparent and remove any layout impact */
+#header-container,
+#hero-container,
+#services-container,
+#projects-container,
+#about-container,
+#contact-container,
+#footer-container {
+    background: transparent;
+    margin: 0;
+    padding: 0;
+    display: contents;
+    /* This makes the container effectively invisible to layout */
+}
+
+/* Fix height issues for sections that might inherit wrong heights */
+.hero {
+    min-height: 100vh;
+}
+
+.services,
+.projects,
+.about,
+.contact {
+    min-height: unset;
+}
+
+/* Fix hero preview slider */
+.hero-preview-slide {
+    position: relative;
+    display: none;
+    width: 100%;
+    height: 100%;
+}
+
+.hero-preview-slide.active {
+    display: block;
+}
+
+.slide-placeholder {
+    width: 100%;
+    height: 200px;
+    background: linear-gradient(135deg, var(--card-bg), var(--bg-secondary));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+}
+
+.slide-placeholder-text {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--accent-primary);
+    text-shadow: 0 0 20px rgba(62, 111, 255, 0.3);
+}
+
+.slide-info {
+    padding: 1rem;
+}
+
+.slide-info h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.slide-info p {
+    color: var(--text-secondary);
+    font-size: 1rem;
+}
+
+/* Fix particle animation */
+.particle {
+    animation: float 20s infinite linear;
+}
+
+/* Ensure component ID selectors match CSS class selectors */
+#header {}
+
+#hero {}
+
+#services {}
+
+#projects {}
+
+#about {}
+
+#contact {}
+
+/* Fix image placeholders in project cards */
+.project-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Fix animation classes */
+.fade-in {
+    animation: fadeIn 1s forwards;
+}
+
+.animated {
+    animation: fadeInUp 1s forwards;
+}
+
+/* Fix service cards on hover */
+.service-card.hover .service-card-inner,
+.service-card:hover .service-card-inner {
+    transform: translateY(-15px) rotateX(5deg);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), 0 0 30px rgba(62, 111, 255, 0.2);
+}
+
+/* Fix project cards on hover */
+/* .project-card.hover,
+.project-card:hover {
+    transform: translateY(-20px) scale(1.02) rotateX(5deg);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3), 0 0 30px rgba(62, 111, 255, 0.2);
+} */
+
+
+/* Fix contact form focus states */
+.form-group.focused .form-label {
+    color: var(--accent-primary);
+}
+
+/* Fix scroll top button */
+.scroll-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    border: none;
+    border-radius: 50%;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 5px 15px rgba(62, 111, 255, 0.3);
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.scroll-top.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.scroll-top:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(62, 111, 255, 0.5);
+}
