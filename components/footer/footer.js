@@ -22,45 +22,39 @@ function animateFooterLinks() {
     footerLinks.forEach(link => {
         // Add hover effect
         link.addEventListener('mouseenter', function () {
-            this.classList.add('hover');
+            this.classList.add('footer-hover');
         });
 
         link.addEventListener('mouseleave', function () {
-            this.classList.remove('hover');
+            this.classList.remove('footer-hover');
         });
     });
 }
 
 // Set up scroll-to-top functionality
 function setupScrollToTop() {
-    const footer = document.querySelector('footer');
+    const footer = document.querySelector('.footer-main');
 
     if (footer) {
         // Create scroll-to-top button if it doesn't exist
-        let scrollTopButton = document.querySelector('.scroll-top');
+        let scrollTopButton = document.querySelector('.footer-scroll-top');
 
         if (!scrollTopButton) {
             scrollTopButton = document.createElement('button');
-            scrollTopButton.className = 'scroll-top';
+            scrollTopButton.className = 'footer-scroll-top';
             scrollTopButton.innerHTML = '↑';
             scrollTopButton.setAttribute('aria-label', 'Scroll to top');
             scrollTopButton.setAttribute('title', 'Scroll to top');
 
-            // Hide button initially
-            scrollTopButton.style.opacity = '0';
-            scrollTopButton.style.pointerEvents = 'none';
-
-            // Add button to the DOM
+            // Add button to the DOM (starts hidden by CSS)
             document.body.appendChild(scrollTopButton);
 
             // Show/hide button based on scroll position
             window.addEventListener('scroll', function () {
                 if (window.scrollY > 500) {
-                    scrollTopButton.style.opacity = '1';
-                    scrollTopButton.style.pointerEvents = 'auto';
+                    scrollTopButton.classList.add('footer-visible');
                 } else {
-                    scrollTopButton.style.opacity = '0';
-                    scrollTopButton.style.pointerEvents = 'none';
+                    scrollTopButton.classList.remove('footer-visible');
                 }
             });
 
@@ -90,13 +84,13 @@ function updateCopyrightYear() {
 
 // Optional: Add footer animations when scrolled into view
 function addFooterAnimations() {
-    const footer = document.querySelector('footer');
+    const footer = document.querySelector('.footer-main');
 
     if (footer) {
         const observeFooter = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    footer.classList.add('animated');
+                    footer.classList.add('footer-animated');
                     observeFooter.unobserve(entry.target);
                 }
             });

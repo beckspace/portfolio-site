@@ -1,181 +1,113 @@
 <section class="projects" id="projects">
-    <div class="container">
-        <h2 class="section-title">Featured Projects</h2>
+    <div class="projects-container">
+        <h2 class="projects-section-title">Featured Projects</h2>
         <div class="projects-grid">
-            <!-- Project Card 1 -->
-            <div class="project-card">
+            <!-- Project Card 1 - Mobile App (Vertical Rectangle) -->
+            <div class="projects-card">
                 <!-- Spotlight effect that follows mouse cursor - will be removed by JS -->
-                <div class="spotlight"></div>
+                <div class="projects-spotlight"></div>
 
-                <div class="project-main">
-                    <div class="cube-container">
-                        <!-- Renamed from magic-circle to cube-circle -->
-                        <div class="cube-circle"></div>
+                <div class="projects-main-content">
+                    <div class="projects-square-container">
+                        <!-- Renamed from cube-circle to square-circle -->
+                        <div class="projects-square-circle"></div>
 
-                        <!-- Shadow under the cube -->
-                        <div class="cube-shadow"></div>
+                        <!-- Shadow under the square -->
+                        <div class="projects-square-shadow projects-shadow-vertical"></div>
 
-                        <!-- 3D Cube with Solo Leveling style -->
-                        <div class="cube">
-                            <div class="cube-face front">
-                                <img src="components/projects/images/potd.png"
-                                    alt="NASA Picture of the Day App Front" />
-                            </div>
-                            <div class="cube-face back">
-                                <img src="components/projects/images/potd.png"
-                                    alt="NASA Picture of the Day App Back" />
-                            </div>
-                            <div class="cube-face right">
-                                <img src="components/projects/images/potd.png"
-                                    alt="NASA Picture of the Day App Right" />
-                            </div>
-                            <div class="cube-face left">
-                                <img src="components/projects/images/potd.png"
-                                    alt="NASA Picture of the Day App Left" />
-                            </div>
-                            <div class="cube-face top">
-                                <img src="components/projects/images/potd.png"
-                                    alt="NASA Picture of the Day App Top" />
-                            </div>
-                            <div class="cube-face bottom">
-                                <img src="components/projects/images/potd.png"
-                                    alt="NASA Picture of the Day App Bottom" />
-                            </div>
+                        <!-- Floating Square with Solo Leveling style - VERTICAL for mobile -->
+                        <div class="projects-square projects-shape-vertical">
+                            <img src="components/projects/images/potd.png"
+                                alt="NASA Picture of the Day App" />
                         </div>
                     </div>
 
-                    <div class="project-info">
-                        <div class="project-content">
-                            <h3 class="project-title">NASA Picture of the Day App</h3>
-                            <p class="project-description">Android application that integrates with NASA's public API to display astronomy pictures, Mars rover photos, and space discoveries. Features clean UI design and efficient data handling.
+                    <div class="projects-info">
+                        <div class="projects-content">
+                            <h3 class="projects-title">NASA Picture of the Day App</h3>
+                            <p class="projects-description">Android application that integrates with NASA's public API to display astronomy pictures, Mars rover photos, and space discoveries. Features clean UI design and efficient data handling.
                             </p>
                         </div>
-                        <div class="project-tags">
-                            <span class="project-tag">Android</span>
-                            <span class="project-tag">Java</span>
-                            <span class="project-tag">REST API</span>
+                        <div class="projects-tags-and-source">
+                            <div class="projects-tags">
+                                <span class="projects-tag">Android</span>
+                                <span class="projects-tag">Java</span>
+                                <span class="projects-tag">REST API</span>
+                            </div>
+                            <a href="#" class="projects-source-link">
+                                <i class="fab fa-github"></i> Source
+                            </a>
                         </div>
                     </div>
-                </div>
-                <div class="project-buttons">
-                    <a href="#" class="project-link"><i class="fas fa-eye"></i> View</a>
-                    <a href="#" class="project-link"><i class="fas fa-code-branch"></i> Source</a>
                 </div>
             </div>
 
-            <!-- Project Card 2 -->
-            <div class="project-card">
-                <div class="spotlight"></div>
-                <div class="project-main">
-                    <div class="cube-container">
-                        <!-- Renamed from magic-circle to cube-circle -->
-                        <div class="cube-circle"></div>
-                        <div class="cube-shadow"></div>
-                        <div class="cube">
-                            <div class="cube-face front">
-                                <img src="components/projects/images/pomogranate.png"
-                                    alt="Pomodoro Habit Tracker Front" />
-                            </div>
-                            <div class="cube-face back">
-                                <img src="components/projects/images/pomogranate.png"
-                                    alt="Pomodoro Habit Tracker Back" />
-                            </div>
-                            <div class="cube-face right">
-                                <img src="components/projects/images/pomogranate.png"
-                                    alt="Pomodoro Habit Tracker Right" />
-                            </div>
-                            <div class="cube-face left">
-                                <img src="components/projects/images/pomogranate.png"
-                                    alt="Pomodoro Habit Tracker Left" />
-                            </div>
-                            <div class="cube-face top">
-                                <img src="components/projects/images/pomogranate.png"
-                                    alt="Pomodoro Habit Tracker Top" />
-                            </div>
-                            <div class="cube-face bottom">
-                                <img src="components/projects/images/pomogranate.png"
-                                    alt="Pomodoro Habit Tracker Bottom" />
-                            </div>
+            <div class="projects-card">
+                <div class="projects-spotlight"></div>
+                <div class="projects-main-content">
+                    <div class="projects-square-container">
+                        <!-- Renamed from cube-circle to square-circle -->
+                        <div class="projects-square-circle"></div>
+
+                        <div class="projects-square-shadow projects-shadow-vertical"></div>
+                        
+                        <div class="projects-square projects-shape-vertical">
+                            <img src="components/projects/images/pomogranate.png"
+                                alt="Pomodoro Habit Tracker" />
                         </div>
                     </div>
 
-                    <div class="project-info">
-                        <div class="project-content">
-                            <h3 class="project-title">Pomodoro Habit Tracker</h3>
-                            <p class="project-description">Productivity application featuring timer functionality and data persistence. Built with focus on user experience, habit formation, and progress tracking with clean, intuitive interface design.</p>
+                    <div class="projects-info">
+                        <div class="projects-content">
+                            <h3 class="projects-title">Pomodoro Habit Tracker</h3>
+                            <p class="projects-description">Productivity application featuring timer functionality and data persistence. Built with focus on user experience, habit formation, and progress tracking with clean, intuitive interface design.</p>
                         </div>
-                        <div class="project-tags">
-                            <span class="project-tag">Java</span>
-                            <span class="project-tag">Data Persistence</span>
-                            <span class="project-tag">UI Design</span>
+                        <div class="projects-tags-and-source">
+                            <div class="projects-tags">
+                                <span class="projects-tag">Java</span>
+                                <span class="projects-tag">Data Persistence</span>
+                                <span class="projects-tag">UI Design</span>
+                            </div>
+                            <a href="#" class="projects-source-link">
+                                <i class="fab fa-github"></i> Source
+                            </a>
                         </div>
                     </div>
-                </div>
-                <div class="project-buttons">
-                    <a href="#" class="project-link"><i class="fas fa-eye"></i> View</a>
-                    <a href="#" class="project-link"><i class="fas fa-code-branch"></i> Source</a>
                 </div>
             </div>
 
-            <!-- Project Card 3 -->
-            <div class="project-card">
-                <div class="spotlight"></div>
-                <div class="project-main">
-                    <div class="cube-container">
-                        <div class="cube-circle"></div>
-                        <div class="cube-shadow"></div>
-                        <div class="cube">
-                            <div class="cube-face front">
-                                <img src="components/projects/images/portfolio.png"
-                                    alt="Personal Portfolio Website Front" />
-                            </div>
-                            <div class="cube-face back">
-                                <img src="components/projects/images/portfolio.png"
-                                    alt="Personal Portfolio Website Back" />
-                            </div>
-                            <div class="cube-face right">
-                                <img src="components/projects/images/portfolio.png"
-                                    alt="Personal Portfolio Website Right" />
-                            </div>
-                            <div class="cube-face left">
-                                <img src="components/projects/images/portfolio.png"
-                                    alt="Personal Portfolio Website Left" />
-                            </div>
-                            <div class="cube-face top">
-                                <img src="components/projects/images/portfolio.png"
-                                    alt="Personal Portfolio Website Top" />
-                            </div>
-                            <div class="cube-face bottom">
-                                <img src="components/projects/images/portfolio.png"
-                                    alt="Personal Portfolio Website Bottom" />
-                            </div>
+            <!-- Project Card 3 - Web App (Square) -->
+            <div class="projects-card">
+                <div class="projects-spotlight"></div>
+                <div class="projects-main-content">
+                    <div class="projects-square-container">
+                        <div class="projects-square-circle"></div>
+                        <div class="projects-square-shadow"></div>
+                        <div class="projects-square projects-shape-horizontal">
+                            <img src="components/projects/images/portfolio-site.png"
+                                alt="Personal Portfolio Website" />
                         </div>
                     </div>
 
-                    <div class="project-info">
-                        <div class="project-content">
-                            <h3 class="project-title">Personal Portfolio Website</h3>
-                            <p class="project-description">Responsive portfolio website showcasing projects and skills using HTML, CSS, and JavaScript. Implements mobile-first design principles and cross-browser compatibility.</p>
+                    <div class="projects-info">
+                        <div class="projects-content">
+                            <h3 class="projects-title">Personal Portfolio Website</h3>
+                            <p class="projects-description">Responsive portfolio website showcasing projects and skills using HTML, CSS, and JavaScript. Implements mobile-first design principles and cross-browser compatibility.</p>
                         </div>
-                        <div class="project-tags">
-                            <span class="project-tag">HTML</span>
-                            <span class="project-tag">CSS</span>
-                            <span class="project-tag">JavaScript</span>
-                            <span class="project-tag">Responsive Design</span>
+                        <div class="projects-tags-and-source">
+                            <div class="projects-tags">
+                                <span class="projects-tag">HTML</span>
+                                <span class="projects-tag">CSS</span>
+                                <span class="projects-tag">JavaScript</span>
+                                <span class="projects-tag">Responsive Design</span>
+                            </div>
+                            <a href="#" class="projects-source-link">
+                                <i class="fab fa-github"></i> Source
+                            </a>
                         </div>
                     </div>
-                </div>
-                <div class="project-buttons">
-                    <a href="#" class="project-link"><i class="fas fa-eye"></i> View</a>
-                    <a href="#" class="project-link"><i class="fas fa-code-branch"></i> Source</a>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- Add the link to the no-hover-styles.css file -->
-    <link rel="stylesheet" href="path-to-your-css/no-hover-styles.css">
-
-    <!-- Make sure your projects.js is properly linked -->
-    <script src="path-to-your-js/projects.js"></script>
 </section>

@@ -1,4 +1,143 @@
-/* About Section */
+/* ========================================================================== */
+/* ABOUT COMPONENT - PREFIXED AND ISOLATED CSS */
+/* ========================================================================== */
+
+/* --------------------------------------------------------------------------------- */
+/* CSS Custom Properties (Variables) - ABOUT PREFIXED */
+/* --------------------------------------------------------------------------------- */
+
+:root {
+    --about-card-bg: rgba(15, 17, 28, 0.95);
+    --about-bg-secondary: rgba(20, 25, 40, 0.8);
+    --about-text-primary: #ffffff;
+    --about-text-secondary: #caced6;
+    --about-accent-primary: #3e6fff;
+    --about-accent-secondary: #5082ff;
+    --about-accent-glow: 0 0 15px rgba(62, 111, 255, 0.4);
+}
+
+/* --------------------------------------------------------------------------------- */
+/* Required Animations - ABOUT PREFIXED */
+/* --------------------------------------------------------------------------------- */
+
+@keyframes about-pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.5;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+}
+
+@keyframes about-fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --------------------------------------------------------------------------------- */
+/* Base Container and Component Styles - ABOUT PREFIXED */
+/* --------------------------------------------------------------------------------- */
+
+.about-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* About container compatibility fix */
+#about-container {
+    background: transparent;
+    margin: 0;
+    padding: 0;
+    display: contents;
+}
+
+/* Section title styling - ABOUT PREFIXED */
+.about-section-title {
+    font-size: 3rem;
+    text-align: center;
+    margin-bottom: 4rem;
+    color: var(--about-text-primary);
+    font-weight: 700;
+    position: relative;
+    background: linear-gradient(135deg, var(--about-text-primary), var(--about-accent-primary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.about-section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--about-accent-primary), var(--about-accent-secondary));
+    box-shadow: var(--about-accent-glow);
+}
+
+/* Button styling - ABOUT PREFIXED */
+.about-btn {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, var(--about-accent-primary), var(--about-accent-secondary));
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 20px rgba(62, 111, 255, 0.3);
+    margin-top: 2rem;
+}
+
+.about-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(62, 111, 255, 0.5);
+}
+
+/* Animation classes - ABOUT PREFIXED */
+.about-animated {
+    animation: about-fadeInUp 1s forwards;
+}
+
+/* JavaScript-added classes - ABOUT PREFIXED */
+.about-pulse {
+    animation: about-pulse 2s infinite;
+}
+
+.about-active {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 20px rgba(62, 111, 255, 0.4);
+    background: linear-gradient(135deg, rgba(62, 111, 255, 0.3), rgba(166, 77, 255, 0.3));
+}
+
+.about-glowing {
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), 0 0 30px rgba(62, 111, 255, 0.4);
+    transform: rotateY(0deg) scale(1.02);
+}
+
+/* --------------------------------------------------------------------------------- */
+/* About Section - ABOUT PREFIXED */
+/* --------------------------------------------------------------------------------- */
+
+.about-main {
+    padding: 6rem 0;
+    position: relative;
+}
+
 .about-content {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -18,7 +157,7 @@
 .about-image-frame {
     width: 100%;
     height: 500px;
-    background-color: var(--card-bg);
+    background-color: var(--about-card-bg);
     border-radius: 10px;
     overflow: hidden;
     position: relative;
@@ -48,10 +187,10 @@
     box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), 0 0 30px rgba(62, 111, 255, 0.2);
 }
 
-.placeholder-image {
+.about-placeholder-image {
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, var(--card-bg), var(--bg-secondary));
+    background: linear-gradient(135deg, var(--about-card-bg), var(--about-bg-secondary));
     display: flex;
     align-items: center;
     justify-content: center;
@@ -59,26 +198,10 @@
     z-index: 0;
     overflow: hidden;
     background-image: url("/shared/images/about-me.png");
-        background-size: cover;
+    background-size: cover;
 }
 
-/* .placeholder-content {
-    position: relative;
-    top:-40%;
-    z-index: 2;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 3.5rem;
-    font-weight: 700;
-    color: var(--text-primary);
-    letter-spacing: 2px;
-    text-shadow: 0 0 20px rgba(62, 111, 255, 0.5);
-    display: flex;
-
-    flex-direction: column;
-    align-items: center;
-} */
-
-.placeholder-image::after {
+.about-placeholder-image::after {
     content: '';
     position: absolute;
     top: 50%;
@@ -86,17 +209,8 @@
     transform: translate(-50%, -50%);
     width: 200px;
     height: 200px;
-    /* background: radial-gradient(circle, rgba(62, 111, 255, 0.3), transparent 70%); */
     border-radius: 50%;
-    /* animation: pulse 3s infinite; */
     z-index: 1;
-}
-
-.stat-value {
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-top: 1rem;
-    color: var(--accent-primary);
 }
 
 .about-text {
@@ -106,8 +220,9 @@
 
 .about-text p {
     margin-bottom: 1.5rem;
-    color: var(--text-secondary);
+    color: var(--about-text-secondary);
     font-size: 1.1rem;
+    line-height: 1.6;
     position: relative;
     padding-left: 1rem;
 }
@@ -119,29 +234,30 @@
     left: 0;
     width: 3px;
     height: calc(100% - 1rem);
-    background: linear-gradient(to bottom, var(--accent-primary), var(--accent-secondary));
+    background: linear-gradient(to bottom, var(--about-accent-primary), var(--about-accent-secondary));
     border-radius: 3px;
 }
 
-/* Skill Badges */
-.skills-container {
+/* Skills Section - ABOUT PREFIXED */
+.about-skills-container {
     margin-top: 2rem;
     margin-bottom: 2rem;
 }
 
-.skills-title {
+.about-skills-title {
     font-size: 1.5rem;
     margin-bottom: 1.5rem;
-    color: var(--accent-primary);
+    color: var(--about-accent-primary);
+    font-weight: 600;
 }
 
-.skills-badges {
+.about-skills-badges {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
 }
 
-.skill-badge {
+.about-skill-badge {
     display: flex;
     align-items: center;
     background: linear-gradient(135deg, rgba(62, 111, 255, 0.1), rgba(166, 77, 255, 0.1));
@@ -151,9 +267,10 @@
     transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
     position: relative;
     overflow: hidden;
+    cursor: pointer;
 }
 
-.skill-badge::before {
+.about-skill-badge::before {
     content: '';
     position: absolute;
     top: -50%;
@@ -167,46 +284,108 @@
     transform: scale(0.5);
 }
 
-.skill-badge:hover {
+.about-skill-badge:hover {
     transform: translateY(-3px);
     box-shadow: 0 5px 15px rgba(62, 111, 255, 0.3);
     background: linear-gradient(135deg, rgba(62, 111, 255, 0.2), rgba(166, 77, 255, 0.2));
 }
 
-.skill-badge:hover::before {
+.about-skill-badge:hover::before {
     opacity: 1;
-    animation: pulse 2s infinite;
+    animation: about-pulse 2s infinite;
 }
 
-.skill-badge-icon,
-.skill-badge-name {
+.about-skill-badge-name {
     position: relative;
     z-index: 1;
-}
-
-.skill-badge-icon {
     font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--accent-primary);
-    margin-right: 0.5rem;
-    font-family: 'Montserrat', sans-serif;
+    color: var(--about-text-primary);
+    font-weight: 500;
 }
 
-.skill-badge-name {
-    font-size: 0.9rem;
-    color: var(--text-primary);
+/* --------------------------------------------------------------------------------- */
+/* Responsive Styles - ABOUT PREFIXED */
+/* --------------------------------------------------------------------------------- */
+
+@media (max-width: 1200px) {
+    .about-content {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+
+    .about-image-frame {
+        max-width: 500px;
+        margin: 0 auto;
+    }
 }
 
-.level-indicator {
-    display: inline-flex;
-    align-items: center;
-    margin-left: 10px;
-    padding: 0.2rem 0.6rem;
-    background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
-    border-radius: 20px;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 600;
-    font-size: 0.8rem;
-    color: var(--text-primary);
-    box-shadow: 0 0 10px var(--accent-glow);
+@media (max-width: 768px) {
+    .about-main {
+        padding: 4rem 0;
+    }
+
+    .about-section-title {
+        font-size: 2.5rem;
+        margin-bottom: 3rem;
+    }
+
+    .about-content {
+        gap: 2rem;
+    }
+
+    .about-image-frame {
+        height: 400px;
+        transform: none;
+    }
+
+    .about-image-frame:hover {
+        transform: none;
+    }
+
+    .about-text p {
+        font-size: 1rem;
+    }
+
+    .about-skills-badges {
+        gap: 0.8rem;
+    }
+
+    .about-skill-badge {
+        padding: 0.4rem 0.8rem;
+    }
+
+    .about-skill-badge-name {
+        font-size: 0.85rem;
+    }
+
+    .about-container {
+        padding: 0 1.5rem;
+    }
 }
+
+@media (max-width: 576px) {
+    .about-section-title {
+        font-size: 2rem;
+    }
+
+    .about-image-frame {
+        height: 350px;
+    }
+
+    .about-skills-badges {
+        justify-content: center;
+    }
+
+    .about-container {
+        padding: 0 1rem;
+    }
+}
+
+/* ========================================================================== */
+/* REMOVED SECTIONS: */
+/* - Most Animations.css - Kept only pulse and fadeInUp */
+/* - Most Component Compatibility CSS - Kept only about-related fixes */
+/* - Most Responsive Styles - Kept only about breakpoints */
+/* - Particles section - Not used by about component */
+/* - Unused animation classes and character reveal effects */
+/* ========================================================================== */

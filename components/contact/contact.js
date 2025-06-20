@@ -17,7 +17,7 @@ function initContactComponent() {
         const observeContact = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    contactSection.classList.add('animated');
+                    contactSection.classList.add('contact-animated');
                     observeContact.unobserve(entry.target);
                 }
             });
@@ -38,19 +38,19 @@ function setupFormValidation() {
         inputs.forEach(input => {
             // Add focus and blur effects
             input.addEventListener('focus', function () {
-                this.closest('.form-group').classList.add('focused');
+                this.closest('.contact-form-group').classList.add('contact-focused');
             });
 
             input.addEventListener('blur', function () {
-                this.closest('.form-group').classList.remove('focused');
+                this.closest('.contact-form-group').classList.remove('contact-focused');
 
                 // Add valid/invalid class based on input value
                 if (this.value.trim() !== '') {
-                    this.classList.add('valid');
-                    this.classList.remove('invalid');
+                    this.classList.add('contact-valid');
+                    this.classList.remove('contact-invalid');
                 } else if (this.required) {
-                    this.classList.add('invalid');
-                    this.classList.remove('valid');
+                    this.classList.add('contact-invalid');
+                    this.classList.remove('contact-valid');
                 }
             });
         });
@@ -65,7 +65,7 @@ function setupFormValidation() {
 
             requiredInputs.forEach(input => {
                 if (input.value.trim() === '') {
-                    input.classList.add('invalid');
+                    input.classList.add('contact-invalid');
                     isValid = false;
                 }
             });
@@ -73,7 +73,7 @@ function setupFormValidation() {
             // Email validation
             const emailInput = contactForm.querySelector('input[type="email"]');
             if (emailInput && !isValidEmail(emailInput.value)) {
-                emailInput.classList.add('invalid');
+                emailInput.classList.add('contact-invalid');
                 isValid = false;
             }
 
@@ -96,19 +96,19 @@ function isValidEmail(email) {
 
 // Simulate form submission (placeholder for actual submission)
 function simulateFormSubmission() {
-    const submitButton = document.querySelector('.form-submit');
+    const submitButton = document.querySelector('.contact-form-submit');
 
     if (submitButton) {
         // Disable button and show loading state
         submitButton.disabled = true;
-        submitButton.classList.add('loading');
+        submitButton.classList.add('contact-loading');
         submitButton.innerHTML = 'Sending...';
 
         // Simulate server delay
         setTimeout(() => {
             // Show success message
-            submitButton.classList.remove('loading');
-            submitButton.classList.add('success');
+            submitButton.classList.remove('contact-loading');
+            submitButton.classList.add('contact-success');
             submitButton.innerHTML = 'Message Sent!';
 
             // Reset form
@@ -117,7 +117,7 @@ function simulateFormSubmission() {
             // Reset button after delay
             setTimeout(() => {
                 submitButton.disabled = false;
-                submitButton.classList.remove('success');
+                submitButton.classList.remove('contact-success');
                 submitButton.innerHTML = 'Send Message';
             }, 3000);
         }, 1500);
@@ -134,11 +134,11 @@ function animateContactLinks() {
 
         // Add hover effect
         link.addEventListener('mouseenter', function () {
-            this.classList.add('pulse');
+            this.classList.add('contact-pulse');
         });
 
         link.addEventListener('mouseleave', function () {
-            this.classList.remove('pulse');
+            this.classList.remove('contact-pulse');
         });
     });
 }

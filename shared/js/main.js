@@ -1,211 +1,213 @@
-// Main JavaScript for Mechsec website
+// Simple Main JavaScript - No Dependencies, Smooth Loading
 document.addEventListener('DOMContentLoaded', function () {
     // Load all components
     loadAllComponents();
-
-    // Initialize particle background
-    initParticleBackground();
-
-    // Set up global event listeners
+    
+    // Setup global functionality
     setupGlobalEventListeners();
 });
 
-// Function to load all components
+// Simple but effective component loading
 function loadAllComponents() {
-    // Define components with their container IDs
     const components = [
         { name: 'header', target: '#header-container' },
         { name: 'hero', target: '#hero-container' },
-        { name: 'services', target: '#services-container' },
         { name: 'projects', target: '#projects-container' },
         { name: 'about', target: '#about-container' },
         { name: 'contact', target: '#contact-container' },
         { name: 'footer', target: '#footer-container' }
     ];
 
-    // Load each component
-    components.forEach(component => {
-        loadComponent(component.name, component.target);
-    });
+    // Load all components in parallel - this should eliminate choppiness
+    const loadPromises = components.map(component => 
+        loadComponent(component.name, component.target)
+    );
+
+    // Wait for all to complete
+    Promise.allSettled(loadPromises)
+        .then(results => {
+            const successful = results.filter(r => r.status === 'fulfilled').length;
+            console.log(`✅ Components loaded: ${successful}/${components.length}`);
+            
+            // Dispatch completion event
+            document.dispatchEvent(new CustomEvent('allComponentsLoaded'));
+
+            // Add smooth entrance - but only once everything is loaded
+            setTimeout(() => addSmoothEntranceAnimations(), 50);
+        });
 }
 
-// Function to load an individual component
+// Streamlined component loading
 function loadComponent(name, targetSelector) {
-    fetch(`components/${name}/${name}.html`)
+    return fetch(`components/${name}/${name}.html`)
         .then(response => {
-            if (!response.ok) {
-                throw new Error(`Failed to load ${name} component (${response.status} ${response.statusText})`);
-            }
+            if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
             return response.text();
         })
         .then(html => {
-            const targetElement = document.querySelector(targetSelector);
-            if (targetElement) {
-                targetElement.innerHTML = html;
+            const target = document.querySelector(targetSelector);
+            if (!target) throw new Error(`Target ${targetSelector} not found`);
 
-                // Fix any ID issues - ensure the component's main element has the correct ID
-                // This helps CSS selectors still work
-                const mainElement = targetElement.firstElementChild;
-                if (mainElement && !mainElement.id) {
-                    mainElement.id = name;
-                }
+            // Insert HTML
+            target.innerHTML = html;
 
-                // Dispatch component loaded events
-                document.dispatchEvent(new CustomEvent(`${name}Loaded`, {
-                    bubbles: true,
-                    detail: { component: name }
-                }));
-
-                console.log(`Component loaded: ${name}`);
-            } else {
-                console.error(`Target element ${targetSelector} not found for component ${name}`);
+            // Set ID for CSS targeting
+            const mainElement = target.firstElementChild;
+            if (mainElement && !mainElement.id) {
+                mainElement.id = name;
             }
+
+            // Dispatch events for component JS
+            document.dispatchEvent(new CustomEvent(`${name}Loaded`));
+            document.dispatchEvent(new CustomEvent(`component:${name}:loaded`));
+
+            return name;
         })
         .catch(error => {
-            console.error(`Error loading ${name} component:`, error);
-            // Fallback: Show error in container
-            const targetElement = document.querySelector(targetSelector);
-            if (targetElement) {
-                targetElement.innerHTML = `<div class="error-message">Failed to load ${name} component</div>`;
+            console.error(`❌ ${name} failed:`, error);
+            
+            // Show minimal error
+            const target = document.querySelector(targetSelector);
+            if (target) {
+                target.innerHTML = `<div style="padding: 1rem; color: #ff6b6b; text-align: center;">Failed to load ${name}</div>`;
             }
+            
+            throw error;
         });
 }
 
-// Initialize particle background
-function initParticleBackground() {
-    const particleContainer = document.getElementById('particleContainer');
-    if (!particleContainer) return;
-
-    // Simple particle background implementation
-    const particleCount = 50;
-
-    for (let i = 0; i < particleCount; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'particle';
-
-        // Random position
-        particle.style.left = `${Math.random() * 100}%`;
-        particle.style.top = `${Math.random() * 100}%`;
-
-        // Random size
-        const size = Math.random() * 5 + 1;
-        particle.style.width = `${size}px`;
-        particle.style.height = `${size}px`;
-
-        // Random opacity
-        particle.style.opacity = Math.random() * 0.5 + 0.1;
-
-        // Random animation duration
-        particle.style.animationDuration = `${Math.random() * 20 + 10}s`;
-
-        // Random animation delay
-        particle.style.animationDelay = `${Math.random() * 5}s`;
-
-        // Add to container
-        particleContainer.appendChild(particle);
-    }
+// Smooth entrance animations - this should fix the choppy feeling
+function addSmoothEntranceAnimations() {
+    // Get all loaded sections (excluding magic circles background)
+    const sections = document.querySelectorAll('section, header, footer');
+    
+    sections.forEach((section, index) => {
+        if (!section) return;
+        
+        // Set initial invisible state
+        section.style.opacity = '0';
+        section.style.transform = 'translateY(15px)';
+        section.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        
+        // Animate in with minimal stagger
+        requestAnimationFrame(() => {
+            setTimeout(() => {
+                section.style.opacity = '1';
+                section.style.transform = 'translateY(0)';
+            }, index * 60); // Very quick stagger
+        });
+    });
 }
 
-// Set up global event listeners
+// Global event listeners
 function setupGlobalEventListeners() {
-    // Handle scroll events for various effects
-    window.addEventListener('scroll', handleScroll);
-
-    // Handle window resize events
-    window.addEventListener('resize', debounce(handleResize, 250));
-
-    // Add scroll to top button
-    addScrollToTopButton();
-}
-
-// Create and add scroll to top button
-function addScrollToTopButton() {
-    const scrollTopButton = document.createElement('button');
-    scrollTopButton.className = 'scroll-top';
-    scrollTopButton.innerHTML = '↑';
-    scrollTopButton.setAttribute('aria-label', 'Scroll to top');
-    scrollTopButton.setAttribute('title', 'Scroll to top');
-
-    document.body.appendChild(scrollTopButton);
-
-    // Show/hide button based on scroll position
-    window.addEventListener('scroll', function () {
-        if (window.scrollY > 500) {
-            scrollTopButton.classList.add('visible');
-        } else {
-            scrollTopButton.classList.remove('visible');
-        }
-    });
-
-    // Scroll to top when clicked
-    scrollTopButton.addEventListener('click', function () {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
+    // Smooth scroll handling
+    let scrollTimer;
+    window.addEventListener('scroll', () => {
+        if (scrollTimer) return;
+        scrollTimer = requestAnimationFrame(() => {
+            handleScroll();
+            scrollTimer = null;
         });
     });
+
+    // Resize handling
+    window.addEventListener('resize', debounce(handleResize, 200));
+
+    // Keyboard navigation
+    document.addEventListener('keydown', handleKeyboard);
+
+    // Smooth anchor scrolling
+    setupSmoothScrolling();
+
+    console.log('✅ Event listeners ready');
 }
 
 // Handle scroll events
 function handleScroll() {
-    // Header transformation on scroll
-    const header = document.getElementById('header');
+    // Header scroll effect
+    const header = document.querySelector('header');
     if (header) {
-        if (window.scrollY > 100) {
-            header.classList.add('scrolled');
-        } else {
-            header.classList.remove('scrolled');
-        }
+        header.classList.toggle('scrolled', window.scrollY > 100);
     }
 
-    // Add animations to elements when they come into view
-    animateOnScroll();
+    // Setup scroll animations (one-time)
+    if (!window.scrollObserver) {
+        setupScrollAnimations();
+    }
 }
 
-// Animate elements when they become visible
-function animateOnScroll() {
-    // Get all elements that should be animated
-    const animateElements = document.querySelectorAll('.animate-on-scroll:not(.animated)');
+// Setup intersection observer for scroll animations
+function setupScrollAnimations() {
+    window.scrollObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animated');
+                window.scrollObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
 
-    animateElements.forEach(element => {
-        if (isElementInViewport(element)) {
-            element.classList.add('animated');
-        }
-    });
-
-    // Handle section titles
-    const sectionTitles = document.querySelectorAll('.section-title-reveal:not(.animate-in)');
-
-    sectionTitles.forEach(title => {
-        if (isElementInViewport(title)) {
-            title.classList.add('animate-in');
-        }
+    // Observe elements
+    document.querySelectorAll('.animate-on-scroll').forEach(el => {
+        window.scrollObserver.observe(el);
     });
 }
 
-// Check if an element is in the viewport
-function isElementInViewport(element) {
-    const rect = element.getBoundingClientRect();
-    return (
-        rect.top <= (window.innerHeight || document.documentElement.clientHeight) * 0.85 &&
-        rect.bottom >= 0 &&
-        rect.left <= (window.innerWidth || document.documentElement.clientWidth) &&
-        rect.right >= 0
-    );
-}
-
-// Handle window resize events
+// Handle resize
 function handleResize() {
-    // Implement resize handling if needed
-    console.log('Window resized');
+    document.dispatchEvent(new CustomEvent('windowResized', {
+        detail: { width: window.innerWidth, height: window.innerHeight }
+    }));
 }
 
-// Utility function to debounce frequent events like scroll and resize
+
+
+// Smooth scrolling
+function setupSmoothScrolling() {
+    document.addEventListener('click', function(event) {
+        const link = event.target.closest('a[href^="#"]');
+        if (!link) return;
+
+        const href = link.getAttribute('href');
+        if (href === '#') return;
+
+        const target = document.querySelector(href);
+        if (!target) return;
+
+        event.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        
+        if (history.pushState) {
+            history.pushState(null, null, href);
+        }
+    });
+}
+
+// Utility
 function debounce(func, wait) {
     let timeout;
-    return function (...args) {
-        const context = this;
+    return function(...args) {
         clearTimeout(timeout);
-        timeout = setTimeout(() => func.apply(context, args), wait);
+        timeout = setTimeout(() => func.apply(this, args), wait);
     };
 }
+
+// Error handling
+window.addEventListener('error', (e) => console.error('Error:', e.error));
+window.addEventListener('unhandledrejection', (e) => {
+    console.error('Promise rejection:', e.reason);
+    e.preventDefault();
+});
+
+// Performance monitoring
+window.addEventListener('load', () => {
+    if (performance?.getEntriesByType) {
+        setTimeout(() => {
+            const [nav] = performance.getEntriesByType('navigation');
+            if (nav) {
+                console.log(`📊 Loaded in ${Math.round(nav.loadEventEnd - nav.fetchStart)}ms`);
+            }
+        }, 100);
+    }
+});

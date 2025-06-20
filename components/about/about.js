@@ -14,13 +14,13 @@ function initAboutComponent() {
         const observeAbout = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    aboutSection.classList.add('animated');
+                    aboutSection.classList.add('about-animated');
 
                     // Animate the skills container separately
-                    const skillsContainer = aboutSection.querySelector('.skills-container');
+                    const skillsContainer = aboutSection.querySelector('.about-skills-container');
                     if (skillsContainer) {
                         setTimeout(() => {
-                            skillsContainer.classList.add('animated');
+                            skillsContainer.classList.add('about-animated');
                         }, 500);
                     }
 
@@ -35,7 +35,7 @@ function initAboutComponent() {
 
 // Animate skill badges with a slight delay between each
 function animateSkillBadges() {
-    const skillBadges = document.querySelectorAll('.skill-badge');
+    const skillBadges = document.querySelectorAll('.about-skill-badge');
 
     skillBadges.forEach((badge, index) => {
         // Add data attribute for animation delay
@@ -43,22 +43,22 @@ function animateSkillBadges() {
 
         // Add hover effect
         badge.addEventListener('mouseenter', function () {
-            this.classList.add('pulse');
+            this.classList.add('about-pulse');
         });
 
         badge.addEventListener('mouseleave', function () {
-            this.classList.remove('pulse');
+            this.classList.remove('about-pulse');
         });
     });
 
     // Add click functionality to show skill details (placeholder)
     skillBadges.forEach(badge => {
         badge.addEventListener('click', function () {
-            const skillName = this.querySelector('.skill-badge-name').textContent;
+            const skillName = this.querySelector('.about-skill-badge-name').textContent;
             console.log(`Skill clicked: ${skillName}`);
 
-            // Toggle an 'active' class for visual feedback
-            this.classList.toggle('active');
+            // Toggle an 'about-active' class for visual feedback
+            this.classList.toggle('about-active');
 
             // In a complete implementation, this could show skill details
         });
@@ -72,11 +72,11 @@ function initAboutImageEffects() {
     if (aboutImage) {
         // Add glow effect on hover
         aboutImage.addEventListener('mouseenter', function () {
-            this.classList.add('glowing');
+            this.classList.add('about-glowing');
         });
 
         aboutImage.addEventListener('mouseleave', function () {
-            this.classList.remove('glowing');
+            this.classList.remove('about-glowing');
         });
     }
 }

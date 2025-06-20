@@ -1,24 +1,88 @@
-/* 
- * Magic Circles Component
- * Creates arcane geometric patterns with subtler colors
- */
+/* ========================================================================== */
+/* MAGIC CIRCLES COMPONENT - PREFIXED AND ISOLATED CSS - BRIGHTER VERSION */
+/* ========================================================================== */
+
+/* --------------------------------------------------------------------------------- */
+/* CSS Custom Properties (Variables) - MAGIC-CIRCLES PREFIXED */
+/* --------------------------------------------------------------------------------- */
+
+:root {
+    --magic-circles-primary-color: #3e6fff;
+    --magic-circles-secondary-color: #5082ff;
+    --magic-circles-pulse-duration: 8s;
+    --magic-circles-pulse-delay: 0s;
+}
+
+/* --------------------------------------------------------------------------------- */
+/* Required Animations - MAGIC-CIRCLES PREFIXED */
+/* --------------------------------------------------------------------------------- */
+
+@keyframes magic-circles-fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes magic-circles-rotateSlow {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes magic-circles-rotateReverse {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(-360deg);
+    }
+}
+
+@keyframes magic-circles-pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1.0; /* Increased to maximum */
+    }
+    50% {
+        transform: scale(1.05);
+        opacity: 1.0; /* Full brightness throughout pulse */
+    }
+}
+
+/* --------------------------------------------------------------------------------- */
+/* Magic Circles Component - MAGIC-CIRCLES PREFIXED */
+/* --------------------------------------------------------------------------------- */
 
 .magic-circles-container {
-    position: absolute;
-    /* Change to fixed instead of absolute */
+    position: fixed; /* Changed to fixed by default */
     top: 0;
-    right: 0;
-    width: 100%;
-    height: 100%;
-    /* Use 100% instead of 100vh */
-    overflow: visible;
-    z-index: 0;
-    /* Negative z-index to place behind everything */
+    left: 0; /* Changed from right: 0 */
+    width: 100vw; /* Changed to viewport units */
+    height: 100vh; /* Changed to viewport units */
+    overflow: hidden; /* Changed from visible */
+    z-index: -1; /* Background layer */
     pointer-events: none;
 }
 
-/* Base magic circle styling */
-.magic-circle {
+/* Background layer variant - emphasizes fixed positioning */
+.magic-circles-container.magic-circles-background-layer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -10; /* Even further back for background mode */
+    overflow: hidden;
+}
+
+/* Base magic circle styling - MAGIC-CIRCLES PREFIXED */
+.magic-circles-circle {
     position: absolute;
     border-radius: 50%;
     pointer-events: none;
@@ -28,161 +92,216 @@
     will-change: opacity, transform, filter;
 }
 
-/* Add/update the fade-in class */
-.magic-circle.fade-in {
-    opacity: 0.3;
-    /* Reduced opacity for subtler appearance */
+/* Fade-in class - MAGIC-CIRCLES PREFIXED */
+.magic-circles-circle.magic-circles-fade-in {
+    opacity: 1.0; /* Maximum brightness */
     transform: scale(1);
 }
 
-/* SVG container within magic circle */
-.circle-svg-container {
+/* Background layer circles have reduced opacity for subtlety */
+.magic-circles-background-layer .magic-circles-circle {
+    opacity: 0;
+}
+
+.magic-circles-background-layer .magic-circles-circle.magic-circles-fade-in,
+.magic-circles-background-layer .magic-circles-circle.magic-circles-skewed-circle {
+    opacity: 0.7; /* Increased significantly from 0.5 */
+}
+
+/* Animate-pulse class (referenced by JavaScript) - MAGIC-CIRCLES PREFIXED */
+.magic-circles-circle.magic-circles-animate-pulse {
+    animation: magic-circles-pulse var(--magic-circles-pulse-duration, 8s) ease-in-out infinite;
+    animation-delay: var(--magic-circles-pulse-delay, 0s);
+}
+
+/* Background layer pulse animation is more subtle */
+.magic-circles-background-layer .magic-circles-circle.magic-circles-animate-pulse {
+    animation: magic-circles-pulse-subtle var(--magic-circles-pulse-duration, 8s) ease-in-out infinite;
+    animation-delay: var(--magic-circles-pulse-delay, 0s);
+}
+
+/* Subtle pulse animation for background mode */
+@keyframes magic-circles-pulse-subtle {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.5; /* Increased from 0.35 */
+    }
+    50% {
+        transform: scale(1.02);
+        opacity: 0.8; /* Increased from 0.6 */
+    }
+}
+
+/* SVG container within magic circle - MAGIC-CIRCLES PREFIXED */
+.magic-circles-svg-container {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    animation: rotateSlow 120s linear infinite;
+    animation: magic-circles-rotateSlow 120s linear infinite;
     animation-play-state: running;
+    transform-style: preserve-3d;
 }
 
-/* Gradient effect for outer rings - subtler effect */
-.outer-ring-gradient {
+/* Gradient effect for outer rings - MAGIC-CIRCLES PREFIXED */
+.magic-circles-outer-ring-gradient {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     border-radius: 50%;
-    opacity: 0.5;
-    /* Reduced opacity */
+    opacity: 1.0; /* Increased from 0.8 */
     border: 1px solid transparent;
     background: transparent;
-    /* Subtler box shadows */
     box-shadow:
-        inset 0 0 1px 1px rgba(62, 111, 255, 0.15),
-        inset 0 0 2px 2px rgba(40, 80, 255, 0.1),
-        0 0 5px rgba(80, 130, 255, 0.1),
-        0 0 10px rgba(60, 100, 255, 0.05);
+        inset 0 0 1px 1px rgba(62, 111, 255, 0.7), /* Increased from 0.5 */
+        inset 0 0 2px 2px rgba(40, 80, 255, 0.6), /* Increased from 0.4 */
+        0 0 5px rgba(80, 130, 255, 0.6), /* Increased from 0.4 */
+        0 0 10px rgba(60, 100, 255, 0.4), /* Increased from 0.25 */
+        0 0 15px rgba(80, 130, 255, 0.35), /* Increased from 0.2 */
+        0 0 25px rgba(62, 111, 255, 0.25), /* Increased from 0.15 */
+        0 0 35px rgba(80, 130, 255, 0.15); /* Added even more glow */
     transition: box-shadow 0.8s ease-in-out;
 }
 
-/* SVG styles */
-.circle-svg path,
-.circle-svg circle,
-.circle-svg rect,
-.circle-svg line {
+/* Reduced glow for background layer */
+.magic-circles-background-layer .magic-circles-outer-ring-gradient {
+    opacity: 0.7; /* Increased from 0.5 */
+    box-shadow:
+        inset 0 0 1px 1px rgba(62, 111, 255, 0.25), /* Increased from 0.15 */
+        inset 0 0 2px 2px rgba(40, 80, 255, 0.2), /* Increased from 0.1 */
+        0 0 5px rgba(80, 130, 255, 0.2), /* Increased from 0.1 */
+        0 0 10px rgba(60, 100, 255, 0.1), /* Increased from 0.05 */
+        0 0 15px rgba(80, 130, 255, 0.1), /* Increased from 0.05 */
+        0 0 25px rgba(62, 111, 255, 0.08); /* Added brighter glow */
+}
+
+/* SVG styles - MAGIC-CIRCLES PREFIXED */
+.magic-circles-svg path,
+.magic-circles-svg circle,
+.magic-circles-svg rect,
+.magic-circles-svg line {
     stroke-width: 1;
-    /* Thinner lines */
     fill: none;
     vector-effect: non-scaling-stroke;
 }
 
-/* Subtler blue colors */
-.circle-svg .outer-ring {
-    stroke: rgba(62, 111, 255, 0.3);
-    /* More transparent */
+/* SVG element colors - MAGIC-CIRCLES PREFIXED */
+.magic-circles-svg .magic-circles-outer-ring {
+    stroke: rgba(62, 111, 255, 1.0); /* Maximum brightness */
 }
 
-.circle-svg .inner-structure {
-    stroke: rgba(80, 130, 255, 0.35);
+.magic-circles-svg .magic-circles-inner-structure {
+    stroke: rgba(80, 130, 255, 1.0); /* Maximum brightness */
 }
 
-.circle-svg .inner-circle {
-    stroke: rgba(60, 100, 255, 0.4);
+.magic-circles-svg .magic-circles-inner-circle {
+    stroke: rgba(60, 100, 255, 1.0); /* Maximum brightness */
 }
 
-.circle-svg .square {
-    stroke: rgba(40, 80, 255, 0.3);
+.magic-circles-svg .magic-circles-square {
+    stroke: rgba(40, 80, 255, 1.0); /* Maximum brightness */
 }
 
-.circle-svg .divider-line {
-    stroke: rgba(70, 120, 255, 0.25);
-    /* Very subtle divider lines */
+.magic-circles-svg .magic-circles-divider-line {
+    stroke: rgba(70, 120, 255, 0.9); /* Near maximum */
 }
 
-.circle-svg .small-circle {
-    stroke: rgba(100, 140, 255, 0.4);
+.magic-circles-svg .magic-circles-small-circle {
+    stroke: rgba(100, 140, 255, 1.0); /* Maximum brightness */
 }
 
-/* Animations */
-@keyframes rotateSlow {
-    from {
-        transform: rotate(0deg);
-    }
-
-    to {
-        transform: rotate(360deg);
-    }
+/* Reduced stroke opacity for background layer */
+.magic-circles-background-layer .magic-circles-svg .magic-circles-outer-ring {
+    stroke: rgba(62, 111, 255, 0.5); /* Increased from 0.3 */
 }
 
-@keyframes rotateReverse {
-    from {
-        transform: rotate(0deg);
-    }
-
-    to {
-        transform: rotate(-360deg);
-    }
+.magic-circles-background-layer .magic-circles-svg .magic-circles-inner-structure {
+    stroke: rgba(80, 130, 255, 0.4); /* Increased from 0.25 */
 }
 
-/* Particles */
-.circle-glow-particle {
+.magic-circles-background-layer .magic-circles-svg .magic-circles-inner-circle {
+    stroke: rgba(60, 100, 255, 0.5); /* Increased from 0.3 */
+}
+
+.magic-circles-background-layer .magic-circles-svg .magic-circles-square {
+    stroke: rgba(40, 80, 255, 0.4); /* Increased from 0.25 */
+}
+
+.magic-circles-background-layer .magic-circles-svg .magic-circles-divider-line {
+    stroke: rgba(70, 120, 255, 0.35); /* Increased from 0.2 */
+}
+
+.magic-circles-background-layer .magic-circles-svg .magic-circles-small-circle {
+    stroke: rgba(100, 140, 255, 0.5); /* Increased from 0.3 */
+}
+
+/* Glow particles - MAGIC-CIRCLES PREFIXED */
+.magic-circles-glow-particle {
     position: absolute;
     width: 2px;
-    /* Smaller particle */
     height: 2px;
-    /* Smaller particle */
-    background-color: rgba(80, 130, 255, 0.4);
-    /* Subtler color */
+    background-color: rgba(80, 130, 255, 0.9); /* Increased from 0.7 */
     border-radius: 50%;
-    box-shadow: 0 0 3px rgba(62, 111, 255, 0.4);
-    /* Smaller glow */
+    box-shadow: 
+        0 0 3px rgba(62, 111, 255, 0.9), /* Increased from 0.7 */
+        0 0 6px rgba(80, 130, 255, 0.6), /* Increased from 0.4 */
+        0 0 12px rgba(62, 111, 255, 0.3); /* Added extra glow layer */
 }
 
-/* Inner SVG rotation */
-.inner-svg-container {
+/* Reduced glow particles for background layer */
+.magic-circles-background-layer .magic-circles-glow-particle {
+    background-color: rgba(80, 130, 255, 0.6); /* Increased from 0.4 */
+    box-shadow: 
+        0 0 3px rgba(62, 111, 255, 0.5), /* Increased from 0.3 */
+        0 0 6px rgba(80, 130, 255, 0.3), /* Increased from 0.2 */
+        0 0 12px rgba(62, 111, 255, 0.15); /* Added extra glow */
+}
+
+/* Inner SVG rotation container - MAGIC-CIRCLES PREFIXED */
+.magic-circles-inner-svg-container {
     position: absolute;
     top: 10%;
     left: 10%;
     width: 80%;
     height: 80%;
     border-radius: 50%;
-    animation: rotateReverse 80s linear infinite;
+    animation: magic-circles-rotateReverse 80s linear infinite;
     animation-play-state: running;
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-
-    .circle-svg path,
-    .circle-svg circle,
-    .circle-svg rect,
-    .circle-svg line {
-        stroke-width: 0.8;
-        /* Even thinner on mobile */
-    }
-
-    .magic-circle.fade-in {
-        opacity: 0.25;
-        /* Even more subtle on mobile */
-    }
-}
-/* Special styling for the skewed circle */
-.magic-circle.skewed-circle {
-    opacity: 0.3;
+/* Special 3D styling for skewed circles - MAGIC-CIRCLES PREFIXED */
+.magic-circles-circle.magic-circles-skewed-circle {
+    opacity: 1.0; /* Maximum brightness */
     transform: scale(1) perspective(1000px) rotateX(65deg) rotateY(-35deg) !important;
 }
 
-/* Adjust the animation for the skewed circle */
-.circle-svg-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    animation: rotateSlow 120s linear infinite;
-    animation-play-state: running;
-    transform-style: preserve-3d;
-    /* Add this to preserve 3D effect */
+/* Background layer 3D circles maintain the subtle opacity */
+.magic-circles-background-layer .magic-circles-circle.magic-circles-skewed-circle {
+    opacity: 0.7 !important; /* Increased from 0.5 */
+}
+
+/* --------------------------------------------------------------------------------- */
+/* Responsive Adjustments - MAGIC-CIRCLES PREFIXED */
+/* --------------------------------------------------------------------------------- */
+
+@media (max-width: 768px) {
+    .magic-circles-svg path,
+    .magic-circles-svg circle,
+    .magic-circles-svg rect,
+    .magic-circles-svg line {
+        stroke-width: 0.8;
+    }
+
+    .magic-circles-circle.magic-circles-fade-in {
+        opacity: 0.9; /* Very bright even on mobile */
+    }
+
+    /* Even more subtle on mobile for background layer */
+    .magic-circles-background-layer .magic-circles-circle.magic-circles-fade-in,
+    .magic-circles-background-layer .magic-circles-circle.magic-circles-skewed-circle {
+        opacity: 0.5 !important; /* Increased from 0.35 */
+    }
 }

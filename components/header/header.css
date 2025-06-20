@@ -1,57 +1,115 @@
-/* Header and Navigation */
-header {
+/* ========================================================================== */
+/* HEADER COMPONENT - PREFIXED AND ISOLATED CSS */
+/* ========================================================================== */
+
+/* --------------------------------------------------------------------------------- */
+/* Body Reset - Fix for fixed header positioning */
+/* --------------------------------------------------------------------------------- */
+
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+/* --------------------------------------------------------------------------------- */
+/* CSS Custom Properties (Variables) - HEADER PREFIXED */
+/* --------------------------------------------------------------------------------- */
+
+:root {
+    --header-text-primary: #ffffff;
+    --header-accent-primary: #3e6fff;
+    --header-accent-secondary: #5082ff;
+}
+
+/* --------------------------------------------------------------------------------- */
+/* Base Container Styles - HEADER PREFIXED */
+/* --------------------------------------------------------------------------------- */
+
+.header-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.header-nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Make header container transparent (compatibility fix) */
+#header-container {
+    background: transparent;
+    margin: 0;
+    padding: 0;
+    display: contents;
+}
+
+/* --------------------------------------------------------------------------------- */
+/* Header and Navigation - HEADER PREFIXED */
+/* --------------------------------------------------------------------------------- */
+
+.header-main {
     padding: 1.5rem 0;
     position: fixed;
     width: 100%;
     top: 0;
+    left: 0; /* Explicitly set left position */
     z-index: 1000;
     transition: background-color 0.3s ease, padding 0.3s ease, box-shadow 0.3s ease;
     background-color: rgba(7, 7, 18, 0.8);
     backdrop-filter: blur(10px);
 }
 
-header.scrolled {
+.header-main.header-scrolled {
     background-color: rgba(7, 7, 18, 0.95);
     backdrop-filter: blur(10px);
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3), 0 0 30px rgba(62, 111, 255, 0.1);
     padding: 1rem 0;
 }
 
-.logo {
+.header-logo {
     font-family: 'Montserrat', sans-serif;
     font-size: 2.5rem;
     font-weight: 700;
-    color: var(--text-primary);
+    color: var(--header-text-primary);
     text-decoration: none;
     position: relative;
     display: inline-block;
     letter-spacing: 2px;
     text-transform: uppercase;
-    background: linear-gradient(135deg, var(--text-primary), var(--accent-primary));
+    background: linear-gradient(135deg, var(--header-text-primary), var(--header-accent-primary));
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
-.logo::after {
+.header-logo::after {
     content: '';
     position: absolute;
     bottom: 2px;
     left: 0;
     width: 100%;
     height: 3px;
-    background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+    background: linear-gradient(90deg, var(--header-accent-primary), var(--header-accent-secondary));
     box-shadow: 0 0 10px rgba(62, 111, 255, 0.5);
 }
 
-nav ul {
+.header-nav ul {
     display: flex;
     list-style: none;
     gap: 3rem;
+    margin: 0;
+    padding: 0;
 }
 
-nav a {
-    color: var(--text-primary);
+.header-nav a {
+    color: var(--header-text-primary);
     text-decoration: none;
     font-size: 1.1rem;
     font-weight: 500;
@@ -63,32 +121,120 @@ nav a {
     font-family: 'Montserrat', sans-serif;
 }
 
-nav a::after {
+.header-nav a::after {
     content: '';
     position: absolute;
     bottom: 0;
     left: 0;
     width: 0;
     height: 2px;
-    background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+    background: linear-gradient(90deg, var(--header-accent-primary), var(--header-accent-secondary));
     transition: width 0.3s ease;
     box-shadow: 0 0 10px rgba(62, 111, 255, 0.5);
 }
 
-nav a:hover {
-    color: var(--accent-primary);
+.header-nav a:hover {
+    color: var(--header-accent-primary);
     transform: translateY(-3px);
 }
 
-nav a:hover::after {
+.header-nav a:hover::after {
     width: 100%;
 }
 
-.menu-btn {
+.header-menu-btn {
     display: none;
     background: none;
     border: none;
-    color: var(--text-primary);
+    color: var(--header-text-primary);
     font-size: 1.5rem;
     cursor: pointer;
+    transition: color 0.3s ease, transform 0.3s ease;
 }
+
+.header-menu-btn:hover {
+    color: var(--header-accent-primary);
+    transform: scale(1.1);
+}
+
+.header-menu-btn.header-active {
+    color: var(--header-accent-primary);
+}
+
+/* --------------------------------------------------------------------------------- */
+/* Responsive Styles - HEADER PREFIXED */
+/* --------------------------------------------------------------------------------- */
+
+@media (max-width: 992px) {
+    .header-nav ul {
+        gap: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .header-nav ul {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: rgba(7, 7, 18, 0.95);
+        flex-direction: column;
+        align-items: center;
+        padding: 2rem 0;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        gap: 1.5rem;
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        backdrop-filter: blur(10px);
+    }
+
+    .header-nav ul.header-active {
+        display: flex;
+        animation: header-slideDown 0.3s ease forwards;
+    }
+
+    .header-menu-btn {
+        display: block;
+    }
+
+    .header-logo {
+        font-size: 2rem;
+    }
+
+    .header-container {
+        padding: 0 1.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .header-logo {
+        font-size: 1.8rem;
+    }
+
+    .header-container {
+        padding: 0 1rem;
+    }
+}
+
+/* --------------------------------------------------------------------------------- */
+/* Mobile Menu Animation - HEADER PREFIXED */
+/* --------------------------------------------------------------------------------- */
+
+@keyframes header-slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========================================================================== */
+/* REMOVED SECTIONS: */
+/* - Animations.css (lines ~1-150) - Not used by header component */
+/* - Component Compatibility CSS (lines ~160-320) - Only kept header container */
+/* - Most Responsive Styles (lines ~330-450) - Only kept nav-related rules */
+/* - Particles section (lines ~460-475) - Not used by header */
+/* ========================================================================== */

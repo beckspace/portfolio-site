@@ -3,20 +3,17 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Mike Beckett | My Personal Website</title>
+        <title>Michael Beckett | Web Developer & Technical Support Specialist</title>
+        <meta name="description" content="Recent Computer Programming graduate specializing in web development and technical support. View my portfolio of projects and get in touch.">
+
+        <!-- Preconnect for better performance -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Inter:wght@300;400;500;700&display=swap">
+        
+        <!-- Font Imports - Optimized -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap">
 
-        <!-- Shared CSS -->
-        <link rel="stylesheet" href="shared/css/base.css">
-        <link rel="stylesheet" href="shared/css/layout.css">
-        <link rel="stylesheet" href="shared/css/animations.css">
-        <link rel="stylesheet" href="shared/css/utilities.css">
-        <link rel="stylesheet" href="shared/css/responsive.css">
-        <link rel="stylesheet" href="shared/css/component-compatibility.css">
-
-        <!-- Component CSS -->
+        <!-- Component CSS - Load in order of appearance -->
         <link rel="stylesheet" href="components/header/header.css">
         <link rel="stylesheet" href="components/hero/hero.css">
         <link rel="stylesheet" href="components/magic-circles/magic-circles.css">
@@ -27,9 +24,9 @@
     </head>
 
     <body>
-        <!-- Particle Background -->
-        <div class="particle-container" id="particleContainer"></div>
-
+        <!-- Magic circles background layer - loads first -->
+        <div id="magic-circles-container"></div>
+        
         <!-- Component containers -->
         <div id="header-container"></div>
         <div id="hero-container"></div>
@@ -38,19 +35,16 @@
         <div id="contact-container"></div>
         <div id="footer-container"></div>
 
-        <!-- Shared JS -->
-        <script src="shared/js/componentLoader.js"></script>
+        <!-- Main component loader -->
         <script src="shared/js/main.js"></script>
 
-        <!-- Component JS -->
+        <!-- Component Scripts -->
+        <script src="components/magic-circles/magic-circles.js"></script>
         <script src="components/header/header.js"></script>
         <script src="components/hero/hero.js"></script>
-        <script src="components/services/services.js"></script>
         <script src="components/projects/projects.js"></script>
         <script src="components/about/about.js"></script>
         <script src="components/contact/contact.js"></script>
         <script src="components/footer/footer.js"></script>
-        <script src="components/magic-circles/magic-circles.js"></script>
-
     </body>
 </html>

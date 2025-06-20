@@ -11,11 +11,11 @@ function initMobileMenu() {
 
     if (menuBtn && navMenu) {
         menuBtn.addEventListener('click', function () {
-            navMenu.classList.toggle('active');
-            menuBtn.classList.toggle('active');
+            navMenu.classList.toggle('header-active');
+            menuBtn.classList.toggle('header-active');
 
             // Change menu button text based on state
-            if (menuBtn.classList.contains('active')) {
+            if (menuBtn.classList.contains('header-active')) {
                 menuBtn.innerHTML = '✕';
             } else {
                 menuBtn.innerHTML = '☰';
@@ -26,9 +26,9 @@ function initMobileMenu() {
         document.addEventListener('click', function (event) {
             if (!navMenu.contains(event.target) &&
                 !menuBtn.contains(event.target) &&
-                navMenu.classList.contains('active')) {
-                navMenu.classList.remove('active');
-                menuBtn.classList.remove('active');
+                navMenu.classList.contains('header-active')) {
+                navMenu.classList.remove('header-active');
+                menuBtn.classList.remove('header-active');
                 menuBtn.innerHTML = '☰';
             }
         });
@@ -42,15 +42,15 @@ function initScrollEffect() {
     if (header) {
         // Apply initial state based on current scroll position
         if (window.scrollY > 100) {
-            header.classList.add('scrolled');
+            header.classList.add('header-scrolled');
         }
 
         // Update on scroll
         window.addEventListener('scroll', function () {
             if (window.scrollY > 100) {
-                header.classList.add('scrolled');
+                header.classList.add('header-scrolled');
             } else {
-                header.classList.remove('scrolled');
+                header.classList.remove('header-scrolled');
             }
         });
     }

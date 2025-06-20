@@ -23,7 +23,7 @@ function initMagicCircles() {
             container.style.top = '0';
             container.style.left = '0';
 
-            container.classList.add('magic-circles-container');
+            container.classList.add('hero-magic-circles-container');
 
             window.MagicCircles.init('magic-circles-container', {
                 sizes: [600, 400, 800],
@@ -49,7 +49,7 @@ function initMagicCircles() {
     }
 }
 
-// Initialize hero slider - UPDATED VERSION
+// Debug version to identify what's changing the styles
 function initHeroSlider() {
     const sliderElement = document.getElementById('previewSlider');
     const indicatorsElement = document.getElementById('sliderIndicators');
@@ -61,7 +61,6 @@ function initHeroSlider() {
         return;
     }
 
-    // Updated slider data focused on entry-level tech positions
     const slides = [
         {
             image: '/shared/images/nasa-app.jpg',
@@ -100,31 +99,28 @@ function initHeroSlider() {
     let currentSlide = 0;
     let slideTimer;
 
-    // Create slides with professional structure
+    // Create slides with CSS classes only
     slides.forEach((slide, index) => {
-        // Create slide container
         const slideElement = document.createElement('div');
-        slideElement.className = 'preview-slide';
+        slideElement.className = 'hero-preview-slide';
         
-        // Set initial state
         if (index === 0) {
-            slideElement.classList.add('active');
+            slideElement.classList.add('hero-active');
         }
 
-        // Create slide content structure with professional layout
         slideElement.innerHTML = `
-            <div class="preview-content">
-                <div class="preview-card">
+            <div class="hero-preview-content">
+                <div class="hero-preview-card">
                     ${slide.image ? 
-                        `<img src="${slide.image}" alt="${slide.alt}" style="max-width: 320px; height: auto; border-radius: 12px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); object-fit: cover;" />` :
-                        `<div class="slide-placeholder" style="width: 320px; height: 200px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; font-weight: 600;">${slide.title}</div>`
+                        `<img src="${slide.image}" alt="${slide.alt}" class="hero-slide-image" />` :
+                        `<div class="hero-slide-placeholder">${slide.title}</div>`
                     }
                 </div>
-                <div class="preview-info">
-                    <h3 class="preview-title" style="color: #2c3e50; margin-bottom: 8px; font-size: 1.4rem; font-weight: 600;">${slide.title}</h3>
-                    <div class="preview-highlight" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 500; margin-bottom: 12px; display: inline-block;">${slide.highlight}</div>
-                    <p class="preview-description" style="color: #555; line-height: 1.5; margin-bottom: 15px;">${slide.description}</p>
-                    <a href="${slide.link}" class="preview-link" style="color: #667eea; text-decoration: none; font-weight: 500; border-bottom: 2px solid transparent; transition: all 0.3s ease;">Learn More →</a>
+                <div class="hero-preview-info">
+                    <h3 class="hero-preview-title">${slide.title}</h3>
+                    <div class="hero-preview-highlight">${slide.highlight}</div>
+                    <p class="hero-preview-description">${slide.description}</p>
+                    <a href="${slide.link}" class="hero-preview-link">Learn More →</a>
                 </div>
             </div>
         `;
@@ -133,15 +129,92 @@ function initHeroSlider() {
 
         // Create indicator
         const indicator = document.createElement('div');
-        indicator.className = 'slider-indicator';
+        indicator.className = 'hero-slider-indicator';
         if (index === 0) {
-            indicator.classList.add('active');
+            indicator.classList.add('hero-active');
         }
         indicator.addEventListener('click', () => goToSlide(index));
         indicatorsElement.appendChild(indicator);
     });
 
-    // Navigation functions
+    // DEBUGGING: Log the current styles
+    function logElementStyles(element, elementName) {
+        const computedStyles = window.getComputedStyle(element);
+        console.log(`${elementName} styles:`, {
+            backgroundColor: computedStyles.backgroundColor,
+            background: computedStyles.background,
+            color: computedStyles.color
+        });
+    }
+
+    function goToSlide(index) {
+        console.log(`--- Switching to slide ${index} ---`);
+        
+        // Log BEFORE making changes
+        const previewContainer = document.querySelector('.hero-preview-container');
+        if (previewContainer) {
+            logElementStyles(previewContainer, 'Preview Container BEFORE');
+        }
+
+        // Remove active class from current slide and indicator
+        const currentSlideElement = sliderElement.children[currentSlide];
+        const currentIndicator = indicatorsElement.children[currentSlide];
+        
+        currentSlideElement.classList.remove('hero-active');
+        currentSlideElement.classList.add('hero-prev');
+        currentIndicator.classList.remove('hero-active');
+
+        // Update current slide index
+        currentSlide = index;
+
+        // Add active class to new slide and indicator
+        const newSlideElement = sliderElement.children[currentSlide];
+        const newIndicator = indicatorsElement.children[currentSlide];
+        
+        // Clear any transition classes
+        newSlideElement.classList.remove('hero-prev', 'hero-next');
+        newSlideElement.classList.add('hero-active');
+        newIndicator.classList.add('hero-active');
+
+        // DEBUGGING: Check if any elements have inline styles after our changes
+        setTimeout(() => {
+            console.log('--- After slide change ---');
+            
+            // Check for inline styles on key elements
+            const highlightElements = newSlideElement.querySelectorAll('.hero-preview-highlight');
+            const titleElements = newSlideElement.querySelectorAll('.hero-preview-title');
+            const descElements = newSlideElement.querySelectorAll('.hero-preview-description');
+            
+            highlightElements.forEach((el, i) => {
+                console.log(`Highlight ${i} inline style:`, el.style.cssText);
+                logElementStyles(el, `Highlight ${i}`);
+            });
+            
+            titleElements.forEach((el, i) => {
+                console.log(`Title ${i} inline style:`, el.style.cssText);
+                logElementStyles(el, `Title ${i}`);
+            });
+            
+            descElements.forEach((el, i) => {
+                console.log(`Description ${i} inline style:`, el.style.cssText);
+                logElementStyles(el, `Description ${i}`);
+            });
+
+            // Log container styles again
+            if (previewContainer) {
+                logElementStyles(previewContainer, 'Preview Container AFTER');
+            }
+
+            // Clean up previous slide classes
+            sliderElement.querySelectorAll('.hero-preview-slide').forEach(slide => {
+                if (!slide.classList.contains('hero-active')) {
+                    slide.classList.remove('hero-prev', 'hero-next');
+                }
+            });
+        }, 100);
+    }
+
+    // Rest of the functions remain the same...
     function showPrevSlide() {
         goToSlide((currentSlide - 1 + slides.length) % slides.length);
         resetTimer();
@@ -152,39 +225,8 @@ function initHeroSlider() {
         resetTimer();
     }
 
-    function goToSlide(index) {
-        // Remove active class from current slide and indicator
-        const currentSlideElement = sliderElement.children[currentSlide];
-        const currentIndicator = indicatorsElement.children[currentSlide];
-        
-        currentSlideElement.classList.remove('active');
-        currentSlideElement.classList.add('prev');
-        currentIndicator.classList.remove('active');
-
-        // Update current slide index
-        currentSlide = index;
-
-        // Add active class to new slide and indicator
-        const newSlideElement = sliderElement.children[currentSlide];
-        const newIndicator = indicatorsElement.children[currentSlide];
-        
-        // Clear any transition classes
-        newSlideElement.classList.remove('prev', 'next');
-        newSlideElement.classList.add('active');
-        newIndicator.classList.add('active');
-
-        // Clean up previous slide classes after transition
-        setTimeout(() => {
-            sliderElement.querySelectorAll('.preview-slide').forEach(slide => {
-                if (!slide.classList.contains('active')) {
-                    slide.classList.remove('prev', 'next');
-                }
-            });
-        }, 800);
-    }
-
     function startAutoSlide() {
-        slideTimer = setInterval(showNextSlide, 6000); // Slightly longer for reading
+        slideTimer = setInterval(showNextSlide, 6000);
     }
 
     function resetTimer() {
@@ -196,7 +238,6 @@ function initHeroSlider() {
     prevButton.addEventListener('click', showPrevSlide);
     nextButton.addEventListener('click', showNextSlide);
 
-    // Pause on hover for better user experience
     sliderElement.addEventListener('mouseenter', () => {
         clearInterval(slideTimer);
     });
@@ -205,7 +246,6 @@ function initHeroSlider() {
         startAutoSlide();
     });
 
-    // Keyboard navigation
     document.addEventListener('keydown', (e) => {
         if (e.key === 'ArrowLeft') {
             showPrevSlide();
@@ -214,8 +254,15 @@ function initHeroSlider() {
         }
     });
 
-    // Start auto-rotation
-    startAutoSlide();
+    // DEBUGGING: Initial log
+    setTimeout(() => {
+        console.log('=== INITIAL SLIDE STATE ===');
+        const previewContainer = document.querySelector('.hero-preview-container');
+        if (previewContainer) {
+            logElementStyles(previewContainer, 'Preview Container INITIAL');
+        }
+    }, 500);
 
+    startAutoSlide();
     console.log('Hero slider initialized successfully');
 }

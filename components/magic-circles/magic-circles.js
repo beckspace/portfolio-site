@@ -1,5 +1,5 @@
-// Updated Magic Circles JS file with random positioning
-// Magic Circles Component - Final Version
+// Updated Magic Circles JS file with all circles loading at an angle
+// Magic Circles Component - Angled Version
 // No automatic initialization on DOMContentLoaded - hero.js will handle this
 
 /**
@@ -11,8 +11,6 @@ const MagicCircles = (function () {
     let initialized = false;
     let container = null;
     let circles = [];
-
-
 
     // Configuration
     const config = {
@@ -27,6 +25,7 @@ const MagicCircles = (function () {
             secondary: '#5082ff'  // Lighter blue secondary color
         },
         randomPositioning: true, // Enable fully random positioning by default
+        backgroundLayer: true,   // NEW: Makes circles a background layer
         debug: false
     };
 
@@ -59,6 +58,19 @@ const MagicCircles = (function () {
         // Clear any existing content
         container.innerHTML = '';
         circles = [];
+
+        // Apply background layer styling if enabled
+        if (config.backgroundLayer) {
+            container.style.position = 'fixed';  // Changed to fixed for full viewport coverage
+            container.style.top = '0';
+            container.style.left = '0';
+            container.style.width = '100vw';
+            container.style.height = '100vh';
+            container.style.zIndex = '-1';
+            container.style.pointerEvents = 'none';
+            container.style.overflow = 'hidden';
+            container.classList.add('magic-circles-background-layer');
+        }
 
         // Enable debug mode if needed
         if (config.debug) {
@@ -152,7 +164,7 @@ const MagicCircles = (function () {
         for (let i = 0; i < config.circleCount; i++) {
             // Create circle element
             const circle = document.createElement('div');
-            circle.className = 'magic-circle';
+            circle.className = 'magic-circles-circle';
 
             // Set size
             const size = config.sizes[i] || 500;
@@ -173,43 +185,6 @@ const MagicCircles = (function () {
                 };
             }
 
-
-
-            // Add 3D transform to the SECOND circle (index 1)
-            if (i === 1 || 2) {  // You can change this to target any circle (0, 1, or 2)
-                // Apply 3D transformation
-                circle.style.transform = `
-            scale(0.95)
-            perspective(1000px) 
-            rotateX(25deg) 
-            rotateY(-15deg)
-        `;
-
-                // When it fades in, we need to override the transform
-                const originalTransform = circle.style.transform;
-                setTimeout(() => {
-                    circle.classList.add('skewed-circle'); // Add a special class
-                    // The fade-in class applies transform: scale(1)
-                    // We need to extend this with our rotation
-                    circle.style.transform = `
-                scale(1)
-                perspective(1000px) 
-                rotateX(65deg) 
-                rotateY(-35deg)
-            `;
-                }, config.fadeInDelay + (i * config.delayBetween));
-            } else {
-                // Apply delayed fade-in for staggered appearance as before
-                setTimeout(() => {
-                    circle.classList.add('fade-in');
-                    // Add other animations as before
-                }, config.fadeInDelay + (i * config.delayBetween));
-            }
-
-
-
-
-
             // Ensure the circle stays within bounds
             const maxX = containerWidth - size;
             const maxY = containerHeight - size;
@@ -220,14 +195,30 @@ const MagicCircles = (function () {
             circle.style.left = `${posX}px`;
             circle.style.top = `${posY}px`;
 
+            // CHANGED: Apply 3D transformation to ALL circles from the start
+            // Each circle gets a slightly different angle for variety
+            const rotateX = 65 + (i * 5);  // Vary X rotation: 65°, 70°, 75°
+            const rotateY = -35 + (i * 10); // Vary Y rotation: -35°, -25°, -15°
+            
+            // Set initial transform with 3D angle and hidden state
+            circle.style.transform = `
+                scale(0.95)
+                perspective(1000px) 
+                rotateX(${rotateX}deg) 
+                rotateY(${rotateY}deg)
+            `;
+            
+            // Start completely transparent
+            circle.style.opacity = '0';
+
             // Create gradient overlay
             const gradientOverlay = document.createElement('div');
-            gradientOverlay.className = 'outer-ring-gradient';
+            gradientOverlay.className = 'magic-circles-outer-ring-gradient';
             circle.appendChild(gradientOverlay);
 
             // Create SVG container
             const svgContainer = document.createElement('div');
-            svgContainer.className = 'circle-svg-container';
+            svgContainer.className = 'magic-circles-svg-container';
 
             // Add the SVG pattern
             svgContainer.innerHTML = createCircleSvg(size, i);
@@ -235,7 +226,7 @@ const MagicCircles = (function () {
 
             // Create inner rotating container for some elements
             const innerContainer = document.createElement('div');
-            innerContainer.className = 'inner-svg-container';
+            innerContainer.className = 'magic-circles-inner-svg-container';
 
             // Add glow particles
             addGlowParticles(innerContainer, size);
@@ -250,27 +241,41 @@ const MagicCircles = (function () {
 
             // Apply delayed fade-in for staggered appearance
             setTimeout(() => {
-                // Add class to trigger CSS transition
-                circle.classList.add('fade-in');
+                // CHANGED: Fade in while maintaining the 3D transform
+                circle.style.opacity = '0.6'; // Set to visible opacity
+                circle.style.transform = `
+                    scale(1)
+                    perspective(1000px) 
+                    rotateX(${rotateX}deg) 
+                    rotateY(${rotateY}deg)
+                `;
 
-                // Longer delay before adding the animation class
-                // This ensures the initial fade-in is completed before pulsing starts
+                // Add the special class for styling
+                circle.classList.add('magic-circles-skewed-circle');
+
+                // Add pulse animation after fade-in
                 setTimeout(() => {
                     // Create a custom animation-duration for each circle
                     const duration = 8 + i * 0.7;
 
                     // Apply animation properties using CSS variables
-                    circle.style.setProperty('--pulse-duration', `${duration}s`);
-                    circle.style.setProperty('--pulse-delay', `${1.5 + i * 0.5}s`); // Longer delay
+                    circle.style.setProperty('--magic-circles-pulse-duration', `${duration}s`);
+                    circle.style.setProperty('--magic-circles-pulse-delay', `${1.5 + i * 0.5}s`);
 
                     // Add a class to trigger the animation
-                    circle.classList.add('animate-pulse');
-                }, 2000); // Increased delay for a more complete fade-in
+                    circle.classList.add('magic-circles-animate-pulse');
+                }, 2000);
 
             }, config.fadeInDelay + (i * config.delayBetween));
 
             if (config.debug) {
-                console.log(`Circle ${i + 1} created at position:`, { x: posX, y: posY, size });
+                console.log(`Circle ${i + 1} created at position:`, { 
+                    x: posX, 
+                    y: posY, 
+                    size, 
+                    rotateX, 
+                    rotateY 
+                });
             }
         }
     }
@@ -291,28 +296,28 @@ const MagicCircles = (function () {
         const isEven = index % 2 === 0;
 
         // Create SVG string
-        let svg = `<svg class="circle-svg" viewBox="0 0 ${viewSize} ${viewSize}" width="100%" height="100%">`;
+        let svg = `<svg class="magic-circles-svg" viewBox="0 0 ${viewSize} ${viewSize}" width="100%" height="100%">`;
 
         // Add outer rings
-        svg += `<circle class="outer-ring" cx="${center}" cy="${center}" r="${center - 5}" />`;
-        svg += `<circle class="outer-ring" cx="${center}" cy="${center}" r="${center - 25}" />`;
+        svg += `<circle class="magic-circles-outer-ring" cx="${center}" cy="${center}" r="${center - 5}" />`;
+        svg += `<circle class="magic-circles-outer-ring" cx="${center}" cy="${center}" r="${center - 25}" />`;
 
         // Add square
         const squareSize = center * 1.4;
         const squareOffset = (viewSize - squareSize) / 2;
-        svg += `<rect class="square" x="${squareOffset}" y="${squareOffset}" width="${squareSize}" height="${squareSize}" />`;
+        svg += `<rect class="magic-circles-square" x="${squareOffset}" y="${squareOffset}" width="${squareSize}" height="${squareSize}" />`;
 
         // Add inner circles
-        svg += `<circle class="inner-circle" cx="${center}" cy="${center}" r="${center * 0.7}" />`;
-        svg += `<circle class="inner-circle" cx="${center}" cy="${center}" r="${center * 0.5}" />`;
-        svg += `<circle class="inner-circle" cx="${center}" cy="${center}" r="${center * 0.3}" />`;
-        svg += `<circle class="inner-circle" cx="${center}" cy="${center}" r="${center * 0.1}" />`;
+        svg += `<circle class="magic-circles-inner-circle" cx="${center}" cy="${center}" r="${center * 0.7}" />`;
+        svg += `<circle class="magic-circles-inner-circle" cx="${center}" cy="${center}" r="${center * 0.5}" />`;
+        svg += `<circle class="magic-circles-inner-circle" cx="${center}" cy="${center}" r="${center * 0.3}" />`;
+        svg += `<circle class="magic-circles-inner-circle" cx="${center}" cy="${center}" r="${center * 0.1}" />`;
 
         // Add dividing lines - vertical, horizontal, and diagonal
-        svg += `<line class="divider-line" x1="${center}" y1="0" x2="${center}" y2="${viewSize}" />`;
-        svg += `<line class="divider-line" x1="0" y1="${center}" x2="${viewSize}" y2="${center}" />`;
-        svg += `<line class="divider-line" x1="0" y1="0" x2="${viewSize}" y2="${viewSize}" />`;
-        svg += `<line class="divider-line" x1="${viewSize}" y1="0" x2="0" y2="${viewSize}" />`;
+        svg += `<line class="magic-circles-divider-line" x1="${center}" y1="0" x2="${center}" y2="${viewSize}" />`;
+        svg += `<line class="magic-circles-divider-line" x1="0" y1="${center}" x2="${viewSize}" y2="${center}" />`;
+        svg += `<line class="magic-circles-divider-line" x1="0" y1="0" x2="${viewSize}" y2="${viewSize}" />`;
+        svg += `<line class="magic-circles-divider-line" x1="${viewSize}" y1="0" x2="0" y2="${viewSize}" />`;
 
         // Add small circles at intersection points
         const smallCirclePositions = [
@@ -324,7 +329,7 @@ const MagicCircles = (function () {
         ];
 
         smallCirclePositions.forEach(pos => {
-            svg += `<circle class="small-circle" cx="${pos[0]}" cy="${pos[1]}" r="${center * 0.1}" />`;
+            svg += `<circle class="magic-circles-small-circle" cx="${pos[0]}" cy="${pos[1]}" r="${center * 0.1}" />`;
         });
 
         // Add more complex structure based on index
@@ -334,13 +339,13 @@ const MagicCircles = (function () {
                 const start = smallCirclePositions[i];
                 const end = smallCirclePositions[(i + 1) % smallCirclePositions.length];
 
-                svg += `<path class="inner-structure" d="M ${start[0]} ${start[1]} A ${center} ${center} 0 0 1 ${end[0]} ${end[1]}" />`;
+                svg += `<path class="magic-circles-inner-structure" d="M ${start[0]} ${start[1]} A ${center} ${center} 0 0 1 ${end[0]} ${end[1]}" />`;
             }
         } else {
             // Add cross-connecting lines
             for (let i = 0; i < smallCirclePositions.length; i++) {
                 for (let j = i + 1; j < smallCirclePositions.length; j++) {
-                    svg += `<line class="inner-structure" x1="${smallCirclePositions[i][0]}" y1="${smallCirclePositions[i][1]}" 
+                    svg += `<line class="magic-circles-inner-structure" x1="${smallCirclePositions[i][0]}" y1="${smallCirclePositions[i][1]}" 
                                   x2="${smallCirclePositions[j][0]}" y2="${smallCirclePositions[j][1]}" />`;
                 }
             }
@@ -364,7 +369,7 @@ const MagicCircles = (function () {
 
         for (let i = 0; i < particleCount; i++) {
             const particle = document.createElement('div');
-            particle.className = 'circle-glow-particle';
+            particle.className = 'magic-circles-glow-particle';
 
             // Position in a circle
             const angle = (i * (360 / particleCount)) * (Math.PI / 180);
@@ -476,9 +481,19 @@ const MagicCircles = (function () {
             const posX = Math.max(0, Math.min(maxX, position.x));
             const posY = Math.max(0, Math.min(maxY, position.y));
 
-            // Apply new position with transition
+            // CHANGED: Maintain the 3D transform when repositioning
+            const rotateX = 65 + (i * 5);
+            const rotateY = -35 + (i * 10);
+
+            // Apply new position with transition while keeping 3D transform
             circle.style.left = `${posX}px`;
             circle.style.top = `${posY}px`;
+            circle.style.transform = `
+                scale(1)
+                perspective(1000px) 
+                rotateX(${rotateX}deg) 
+                rotateY(${rotateY}deg)
+            `;
         });
     }
 
