@@ -1,5 +1,5 @@
 /* ========================================================================== */
-/* MAGIC CIRCLES COMPONENT - PREFIXED AND ISOLATED CSS - BRIGHTER VERSION */
+/* MAGIC CIRCLES COMPONENT - PREFIXED AND ISOLATED CSS - MOBILE OPTIMIZED */
 /* ========================================================================== */
 
 /* --------------------------------------------------------------------------------- */
@@ -52,6 +52,15 @@
     50% {
         transform: scale(1.05);
         opacity: 1.0; /* Full brightness throughout pulse */
+    }
+}
+
+@keyframes magic-circles-pulse-glow {
+    0%, 100% {
+        opacity: 0.6;
+    }
+    50% {
+        opacity: 1;
     }
 }
 
@@ -287,21 +296,124 @@
 /* Responsive Adjustments - MAGIC-CIRCLES PREFIXED */
 /* --------------------------------------------------------------------------------- */
 
-@media (max-width: 768px) {
+/* Mobile and Tablet Optimizations (up to 1024px for tablets) */
+@media (max-width: 1024px) {
+    /* DISABLE rotation animations for performance */
+    .magic-circles-svg-container,
+    .magic-circles-inner-svg-container {
+        animation: none !important;
+        animation-play-state: paused !important;
+    }
+    
+    /* DISABLE heavy pulse animations */
+    .magic-circles-circle.magic-circles-animate-pulse {
+        animation: none !important;
+    }
+    
+    /* KEEP 3D transforms - they look great and are static (no animation) */
+    .magic-circles-circle.magic-circles-skewed-circle {
+        opacity: 0.7 !important;
+        /* 3D transform will be applied by JavaScript - static, no animation */
+    }
+    
+    /* Background layer circles stay subtle */
+    .magic-circles-background-layer .magic-circles-circle.magic-circles-skewed-circle {
+        opacity: 0.5 !important;
+    }
+    
+    /* DISABLE heavy glow pulse animations */
+    .magic-circles-outer-ring-gradient {
+        animation: none !important;
+        box-shadow: 
+            0 0 8px rgba(62, 111, 255, 0.4),
+            0 0 15px rgba(80, 130, 255, 0.3) !important;
+    }
+    
+    /* Hide glow particles entirely on mobile/tablet */
+    .magic-circles-glow-particle {
+        display: none;
+    }
+    
+    /* Reduce stroke complexity */
     .magic-circles-svg path,
     .magic-circles-svg circle,
     .magic-circles-svg rect,
     .magic-circles-svg line {
         stroke-width: 0.8;
     }
+}
 
+/* Phone-specific optimizations */
+@media (max-width: 768px) {
     .magic-circles-circle.magic-circles-fade-in {
-        opacity: 0.9; /* Very bright even on mobile */
+        opacity: 0.8; /* Slightly reduce visibility */
     }
 
-    /* Even more subtle on mobile for background layer */
+    /* Further reduce background layer opacity on phones */
     .magic-circles-background-layer .magic-circles-circle.magic-circles-fade-in,
     .magic-circles-background-layer .magic-circles-circle.magic-circles-skewed-circle {
-        opacity: 0.5 !important; /* Increased from 0.35 */
+        opacity: 0.4 !important;
+    }
+}
+
+/* Very small screens - more aggressive optimization */
+@media (max-width: 480px) {
+    /* Hide the largest circle to reduce rendering load */
+    .magic-circles-circle:nth-child(3) {
+        display: none;
+    }
+    
+    /* Scale down remaining circles */
+    .magic-circles-circle {
+        transform: scale(0.8) !important;
+    }
+}
+
+/* Respect user's motion preferences on all devices */
+@media (prefers-reduced-motion: reduce) {
+    .magic-circles-svg-container,
+    .magic-circles-inner-svg-container,
+    .magic-circles-circle.magic-circles-animate-pulse,
+    .magic-circles-outer-ring-gradient {
+        animation: none !important;
+        animation-play-state: paused !important;
+    }
+    
+    .magic-circles-circle.magic-circles-skewed-circle {
+        transform: scale(1) !important;
+    }
+    
+    .magic-circles-glow-particle {
+        display: none;
+    }
+}
+
+/* Desktop-only: Ensure animations are running (1025px and up) */
+@media (min-width: 1025px) {
+    /* Explicitly enable animations for desktop */
+    .magic-circles-svg-container {
+        animation: magic-circles-rotateSlow 120s linear infinite !important;
+        animation-play-state: running !important;
+    }
+    
+    .magic-circles-inner-svg-container {
+        animation: magic-circles-rotateReverse 80s linear infinite !important;
+        animation-play-state: running !important;
+    }
+    
+    /* Ensure 3D transforms work on desktop */
+    .magic-circles-circle.magic-circles-skewed-circle {
+        opacity: 1.0 !important;
+        /* 3D transform will be applied by JavaScript */
+    }
+    
+    /* Full glow effects on desktop */
+    .magic-circles-outer-ring-gradient {
+        animation: magic-circles-pulse-glow 4s ease-in-out infinite !important;
+    }
+    
+    /* Show all particles on desktop */
+    .magic-circles-glow-particle {
+        display: block;
     }
 }

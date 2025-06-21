@@ -1,5 +1,5 @@
-// Updated Magic Circles JS file with all circles loading at an angle
-// Magic Circles Component - Angled Version
+// Updated Magic Circles JS file with mobile optimizations
+// Magic Circles Component - Mobile Optimized Version
 // No automatic initialization on DOMContentLoaded - hero.js will handle this
 
 /**
@@ -81,7 +81,7 @@ const MagicCircles = (function () {
         // Create the circles
         createCircles();
 
-        // Set up resize handler
+        // Set up resize handler (mobile-optimized)
         setupResizeHandler();
 
         // Mark as initialized
@@ -103,10 +103,22 @@ const MagicCircles = (function () {
     }
 
     /**
-     * Set up the resize event handler with debounce
+     * Set up the resize event handler with mobile optimization
      * @private
      */
     function setupResizeHandler() {
+        // Check if device is mobile/tablet
+        const isMobileOrTablet = window.innerWidth <= 1024;
+        
+        if (isMobileOrTablet) {
+            // NO resize handler for mobile - circles stay in initial positions
+            if (config.debug) {
+                console.log('Resize repositioning disabled for mobile/tablet performance');
+            }
+            return;
+        }
+        
+        // Only setup resize handler for desktop
         let resizeTimeout;
         window.addEventListener('resize', function () {
             clearTimeout(resizeTimeout);
@@ -114,6 +126,10 @@ const MagicCircles = (function () {
                 reposition();
             }, 250);
         });
+        
+        if (config.debug) {
+            console.log('Resize repositioning enabled for desktop');
+        }
     }
 
     /**
@@ -195,7 +211,7 @@ const MagicCircles = (function () {
             circle.style.left = `${posX}px`;
             circle.style.top = `${posY}px`;
 
-            // CHANGED: Apply 3D transformation to ALL circles from the start
+            // Apply 3D transformation to ALL circles from the start
             // Each circle gets a slightly different angle for variety
             const rotateX = 65 + (i * 5);  // Vary X rotation: 65°, 70°, 75°
             const rotateY = -35 + (i * 10); // Vary Y rotation: -35°, -25°, -15°
@@ -241,7 +257,7 @@ const MagicCircles = (function () {
 
             // Apply delayed fade-in for staggered appearance
             setTimeout(() => {
-                // CHANGED: Fade in while maintaining the 3D transform
+                // Fade in while maintaining the 3D transform
                 circle.style.opacity = '0.6'; // Set to visible opacity
                 circle.style.transform = `
                     scale(1)
@@ -253,17 +269,21 @@ const MagicCircles = (function () {
                 // Add the special class for styling
                 circle.classList.add('magic-circles-skewed-circle');
 
-                // Add pulse animation after fade-in
+                // Add pulse animation after fade-in (only on desktop)
                 setTimeout(() => {
-                    // Create a custom animation-duration for each circle
-                    const duration = 8 + i * 0.7;
+                    const isDesktop = window.innerWidth > 1024;
+                    
+                    if (isDesktop) {
+                        // Create a custom animation-duration for each circle
+                        const duration = 8 + i * 0.7;
 
-                    // Apply animation properties using CSS variables
-                    circle.style.setProperty('--magic-circles-pulse-duration', `${duration}s`);
-                    circle.style.setProperty('--magic-circles-pulse-delay', `${1.5 + i * 0.5}s`);
+                        // Apply animation properties using CSS variables
+                        circle.style.setProperty('--magic-circles-pulse-duration', `${duration}s`);
+                        circle.style.setProperty('--magic-circles-pulse-delay', `${1.5 + i * 0.5}s`);
 
-                    // Add a class to trigger the animation
-                    circle.classList.add('magic-circles-animate-pulse');
+                        // Add a class to trigger the animation
+                        circle.classList.add('magic-circles-animate-pulse');
+                    }
                 }, 2000);
 
             }, config.fadeInDelay + (i * config.delayBetween));
@@ -440,11 +460,20 @@ const MagicCircles = (function () {
     }
 
     /**
-     * Reposition all circles based on container size
+     * Reposition all circles based on container size (desktop only)
      * @public
      */
     function reposition() {
         if (!initialized || !container) {
+            return;
+        }
+        
+        // Skip repositioning on mobile/tablet
+        const isMobileOrTablet = window.innerWidth <= 1024;
+        if (isMobileOrTablet) {
+            if (config.debug) {
+                console.log('Repositioning skipped for mobile/tablet');
+            }
             return;
         }
 
@@ -481,7 +510,7 @@ const MagicCircles = (function () {
             const posX = Math.max(0, Math.min(maxX, position.x));
             const posY = Math.max(0, Math.min(maxY, position.y));
 
-            // CHANGED: Maintain the 3D transform when repositioning
+            // Maintain the 3D transform when repositioning (desktop only)
             const rotateX = 65 + (i * 5);
             const rotateY = -35 + (i * 10);
 

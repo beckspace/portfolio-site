@@ -1,5 +1,5 @@
 /* ========================================================================== */
-/* PROJECTS COMPONENT - PREFIXED AND ISOLATED CSS */
+/* PROJECTS COMPONENT - MOBILE OPTIMIZED CSS */
 /* ========================================================================== */
 
 /* --------------------------------------------------------------------------------- */
@@ -172,33 +172,33 @@
 /* Mobile animations for different shapes */
 @keyframes projects-float-mobile-square {
     0%, 100% {
-        transform: translate(-50%, -50%) translateY(0px) scale(0.9) rotateZ(-3deg) rotateY(15deg) rotateX(-5deg);
+        transform: translate(-50%, -50%) translateY(0px) scale(0.9) rotateZ(-2deg) rotateY(10deg) rotateX(-3deg);
         filter: drop-shadow(var(--projects-blue-glow));
     }
     50% {
-        transform: translate(-50%, -50%) translateY(-15px) scale(0.9) rotateZ(-3deg) rotateY(15deg) rotateX(-5deg);
+        transform: translate(-50%, -50%) translateY(-10px) scale(0.9) rotateZ(-2deg) rotateY(10deg) rotateX(-3deg);
         filter: drop-shadow(var(--projects-purple-glow));
     }
 }
 
 @keyframes projects-float-mobile-vertical {
     0%, 100% {
-        transform: translate(-50%, -50%) translateY(0px) scale(0.85) rotateZ(-2deg) rotateY(12deg) rotateX(-3deg);
+        transform: translate(-50%, -50%) translateY(0px) scale(0.85) rotateZ(-1.5deg) rotateY(8deg) rotateX(-2deg);
         filter: drop-shadow(var(--projects-blue-glow));
     }
     50% {
-        transform: translate(-50%, -50%) translateY(-18px) scale(0.85) rotateZ(-2deg) rotateY(12deg) rotateX(-3deg);
+        transform: translate(-50%, -50%) translateY(-12px) scale(0.85) rotateZ(-1.5deg) rotateY(8deg) rotateX(-2deg);
         filter: drop-shadow(var(--projects-purple-glow));
     }
 }
 
 @keyframes projects-float-mobile-horizontal {
     0%, 100% {
-        transform: translate(-50%, -50%) translateY(0px) scale(0.8) rotateZ(-2.5deg) rotateY(18deg) rotateX(-4deg);
+        transform: translate(-50%, -50%) translateY(0px) scale(0.8) rotateZ(-1deg) rotateY(12deg) rotateX(-2deg);
         filter: drop-shadow(var(--projects-blue-glow));
     }
     50% {
-        transform: translate(-50%, -50%) translateY(-12px) scale(0.8) rotateZ(-2.5deg) rotateY(18deg) rotateX(-4deg);
+        transform: translate(-50%, -50%) translateY(-8px) scale(0.8) rotateZ(-1deg) rotateY(12deg) rotateX(-2deg);
         filter: drop-shadow(var(--projects-purple-glow));
     }
 }
@@ -244,6 +244,7 @@
 .projects-container {
     max-width: 1700px;
     margin: 0 auto;
+    padding: 0 1rem;
 }
 
 /* Base styling for the entire page */
@@ -254,17 +255,6 @@
     font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, sans-serif;
 }
 
-body {
-    background-color: #050714;
-    background-image:
-        radial-gradient(circle at 20% 30%, rgba(0, 194, 255, 0.03) 0%, transparent 25%),
-        radial-gradient(circle at 80% 70%, rgba(151, 71, 255, 0.03) 0%, transparent 25%);
-    color: var(--projects-text-primary);
-    min-height: 100vh;
-    padding: 2rem;
-    overflow-x: hidden;
-}
-
 /* --------------------------------------------------------------------------------- */
 /* Projects Section - PROJECTS PREFIXED */
 /* --------------------------------------------------------------------------------- */
@@ -273,20 +263,47 @@ body {
     /* Main projects section wrapper if needed */
 }
 
-/* Section title styling - PROJECTS PREFIXED */
+/* Replace the existing .projects-section-title rule in projects.css with this updated version */
+
 .projects-section-title {
     font-size: 3rem;
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 4rem;
+    color: var(--projects-text-primary);
+    font-weight: 700;
     position: relative;
-    display: inline-block;
+    background: linear-gradient(135deg, var(--projects-text-primary), var(--projects-solo-blue));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: 'Montserrat', sans-serif;
+    /* Remove the responsive clamp and other conflicting properties */
+}
+
+.projects-section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
     left: 50%;
     transform: translateX(-50%);
-    text-transform: uppercase;
-    font-weight: 800;
-    letter-spacing: 2px;
-    color: var(--projects-text-primary);
-    text-shadow: var(--projects-blue-glow);
+    width: 100px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--projects-solo-blue), var(--projects-solo-purple));
+    box-shadow: var(--projects-blue-glow);
+}
+
+/* Responsive adjustments to match About section */
+@media (max-width: 768px) {
+    .projects-section-title {
+        font-size: 2.5rem;
+        margin-bottom: 3rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .projects-section-title {
+        font-size: 2rem;
+    }
 }
 
 /* Projects Grid Layout - PROJECTS PREFIXED */
@@ -308,6 +325,8 @@ body {
     position: relative;
     z-index: 1;
     perspective: 1000px;
+    width: 100%;
+    max-width: none;
 }
 
 /* Card outer glow effect - PROJECTS PREFIXED */
@@ -352,7 +371,7 @@ body {
     position: relative;
     background-color: var(--projects-card-bg);
     overflow: visible;
-    height: 680px;
+    min-height: 600px;
 }
 
 /* Square Container - PROJECTS PREFIXED */
@@ -364,6 +383,7 @@ body {
     height: 100%;
     display: block;
     will-change: transform;
+    min-height: 400px;
 }
 
 /* Decorative circle around square - PROJECTS PREFIXED */
@@ -372,8 +392,8 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 520px;
-    height: 520px;
+    width: 420px;
+    height: 420px;
     border-radius: 50%;
     border: 1px solid rgba(0, 194, 255, 0.1);
     z-index: 1;
@@ -386,8 +406,8 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) rotate(45deg);
-    width: 470px;
-    height: 470px;
+    width: 380px;
+    height: 380px;
     border: 1px dashed rgba(151, 71, 255, 0.192);
 }
 
@@ -397,8 +417,8 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 306px;
-    height: 306px;
+    width: 250px;
+    height: 250px;
     border-radius: 50%;
     background: radial-gradient(circle,
             rgba(0, 194, 255, 0.03) 0%,
@@ -409,8 +429,8 @@ body {
 /* Shadow beneath the square - PROJECTS PREFIXED */
 .projects-square-shadow {
     position: absolute;
-    width: 420px;
-    height: 60px;
+    width: 340px;
+    height: 50px;
     background: radial-gradient(ellipse at center,
             rgba(0, 194, 255, 0.5) 0%,
             rgba(151, 71, 255, 0.2) 50%,
@@ -449,15 +469,15 @@ body {
 
 /* Square variant (default) - PROJECTS PREFIXED */
 .projects-square.projects-shape-square {
-    width: 480px;
-    height: 480px;
+    width: 390px;
+    height: 390px;
     animation: projects-float-square 8s ease-in-out infinite;
 }
 
 /* Vertical rectangle variant (mobile projects) - PROJECTS PREFIXED */
 .projects-square.projects-shape-vertical {
-    width: 324px;
-    height: 486px;
+    width: 260px;
+    height: 390px;
     border-radius: 20px;
     border: 2px solid var(--projects-solo-purple);
     box-shadow: inset var(--projects-purple-shadow), var(--projects-purple-glow);
@@ -466,8 +486,8 @@ body {
 
 /* Horizontal rectangle variant (desktop projects) - PROJECTS PREFIXED */
 .projects-square.projects-shape-horizontal {
-    width: 570px;
-    height: 360px;
+    width: 460px;
+    height: 290px;
     border-radius: 12px;
     border: 2px solid rgba(0, 194, 255, 0.8);
     box-shadow: inset 0 0 25px rgba(0, 194, 255, 0.6), var(--projects-blue-glow);
@@ -482,12 +502,12 @@ body {
     object-position: center;
     opacity: 0.9;
     filter: saturate(1.3) contrast(1.3) brightness(1.1);
-    border-radius: inherit; /* Inherit border radius from parent */
+    border-radius: inherit;
 }
 
 /* Specific adjustments for vertical shape images */
 .projects-square.projects-shape-vertical img {
-    object-fit: cover; /* Changed from contain to cover */
+    object-fit: cover;
     object-position: center;
 }
 
@@ -500,13 +520,13 @@ body {
 
 /* Shadow adjustments for different shapes - PROJECTS PREFIXED */
 .projects-square-shadow.projects-shadow-vertical {
-    width: 300px;
-    height: 75px;
+    width: 240px;
+    height: 60px;
 }
 
 .projects-square-shadow.projects-shadow-horizontal {
-    width: 480px;
-    height: 50px;
+    width: 390px;
+    height: 45px;
 }
 
 /* Project Info Styles - PROJECTS PREFIXED */
@@ -542,7 +562,7 @@ body {
 }
 
 .projects-title {
-    font-size: 2rem;
+    font-size: clamp(1.4rem, 4vw, 2rem);
     margin-bottom: 1.5rem;
     color: var(--projects-text-primary);
     font-weight: 800;
@@ -551,6 +571,7 @@ body {
     text-shadow: var(--projects-blue-glow);
     letter-spacing: 1px;
     transform: translateX(5px);
+    line-height: 1.3;
 }
 
 .projects-title::after {
@@ -567,7 +588,7 @@ body {
 .projects-description {
     color: var(--projects-text-secondary);
     margin-bottom: 1.5rem;
-    font-size: 1.1rem;
+    font-size: clamp(0.9rem, 2.5vw, 1.1rem);
     line-height: 1.7;
     transform: translateX(5px);
     flex-grow: 1;
@@ -609,11 +630,12 @@ body {
     background: var(--projects-gradient-bg);
     color: var(--projects-solo-blue);
     border-radius: 20px;
-    font-size: 0.9rem;
+    font-size: clamp(0.75rem, 2vw, 0.9rem);
     font-weight: 600;
     letter-spacing: 0.5px;
     border: 1px solid rgba(0, 194, 255, 0.3);
     box-shadow: 0 5px 15px rgba(0, 194, 255, 0.15);
+    white-space: nowrap;
 }
 
 /* Source Button - PROJECTS PREFIXED */
@@ -623,7 +645,7 @@ body {
     color: white;
     border-radius: 8px;
     text-decoration: none;
-    font-size: 0.9rem;
+    font-size: clamp(0.8rem, 2vw, 0.9rem);
     font-weight: 600;
     letter-spacing: 1px;
     text-transform: uppercase;
@@ -639,6 +661,7 @@ body {
     text-shadow: 0 0 8px rgba(0, 194, 255, 0.8);
     transition: all 0.3s ease;
     flex-shrink: 0;
+    white-space: nowrap;
 }
 
 .projects-source-link:hover {
@@ -669,18 +692,18 @@ body {
     animation: projects-pulse-circle 4s ease-in-out infinite;
 }
 
-/* Spotlight effect - PROJECTS PREFIXED */
-.projects-spotlight {
-    /* Spotlight styles if needed */
-}
-
 /* --------------------------------------------------------------------------------- */
 /* Responsive Styles - PROJECTS PREFIXED */
 /* --------------------------------------------------------------------------------- */
 
 @media (max-width: 992px) {
+    .projects-container {
+        padding: 0 1.5rem;
+    }
+    
     .projects-grid {
         max-width: 100%;
+        gap: 2.5rem;
     }
 
     .projects-source-link {
@@ -690,10 +713,15 @@ body {
 }
 
 @media (max-width: 768px) {
+    .projects-container {
+        padding: 0 1rem;
+    }
+    
     .projects-main-content {
         flex-direction: column;
         height: auto;
-        padding-bottom: 50px;
+        padding: 30px 25px 40px 25px;
+        min-height: auto;
     }
 
     .projects-square-container,
@@ -703,92 +731,17 @@ body {
     }
 
     .projects-square-container {
-        height: 520px;
-        margin-bottom: 40px;
+        height: 400px;
+        margin-bottom: 30px;
+        min-height: 350px;
     }
 
     .projects-info {
-        min-height: 300px;
+        min-height: 280px;
+        padding: 1.5rem;
     }
 
     /* Scale down decorative elements for mobile */
-    .projects-square-circle {
-        width: 380px;
-        height: 380px;
-    }
-
-    .projects-square-circle::before {
-        width: 340px;
-        height: 340px;
-    }
-
-    .projects-square-circle::after {
-        width: 220px;
-        height: 220px;
-    }
-
-    /* Mobile animations for different shapes */
-    .projects-square.projects-shape-square {
-        animation: projects-float-mobile-square 8s ease-in-out infinite;
-    }
-
-    .projects-square.projects-shape-vertical {
-        animation: projects-float-mobile-vertical 9s ease-in-out infinite;
-    }
-
-    .projects-square.projects-shape-horizontal {
-        animation: projects-float-mobile-horizontal 7s ease-in-out infinite;
-    }
-
-    /* Mobile responsive adjustments */
-    .projects-tags-and-source {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 1.5rem;
-    }
-
-    .projects-source-link {
-        align-self: center;
-        font-size: 0.8rem;
-        padding: 0.5rem 1rem;
-    }
-
-    .projects-buttons {
-        padding: 1.5rem 1rem;
-    }
-
-    .projects-link {
-        width: 140px;
-        font-size: 0.9rem;
-        padding: 0.7rem 1rem;
-    }
-
-    .projects-grid {
-        gap: 4rem;
-    }
-
-    .projects-card::before {
-        width: 100%;
-        height: 5px;
-        top: 0;
-        left: 0;
-        background: linear-gradient(90deg, var(--projects-solo-blue), var(--projects-solo-purple), var(--projects-solo-blue));
-        background-size: 300% 100%;
-        background-position: 0% 0%;
-    }
-}
-
-@media (max-width: 576px) {
-    .projects-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .projects-card {
-        max-width: 400px;
-        margin: 0 auto;
-    }
-
-    /* Scale down decorative elements for very small screens */
     .projects-square-circle {
         width: 320px;
         height: 320px;
@@ -804,19 +757,389 @@ body {
         height: 180px;
     }
 
-    /* Adjust shapes for very small screens */
+    /* Adjust shapes for mobile */
     .projects-square.projects-shape-square {
-        width: 420px;
-        height: 420px;
+        width: 300px;
+        height: 300px;
+        animation: projects-float-mobile-square 8s ease-in-out infinite;
     }
 
     .projects-square.projects-shape-vertical {
-        width: 270px;
-        height: 405px;
+        width: 200px;
+        height: 300px;
+        animation: projects-float-mobile-vertical 9s ease-in-out infinite;
     }
 
     .projects-square.projects-shape-horizontal {
-        width: 480px;
+        width: 320px;
+        height: 200px;
+        animation: projects-float-mobile-horizontal 7s ease-in-out infinite;
+    }
+
+    /* Adjust shadows for mobile */
+    .projects-square-shadow {
+        width: 280px;
+        height: 40px;
+    }
+
+    .projects-square-shadow.projects-shadow-vertical {
+        width: 180px;
+        height: 50px;
+    }
+
+    .projects-square-shadow.projects-shadow-horizontal {
+        width: 300px;
+        height: 35px;
+    }
+
+    /* Mobile responsive adjustments */
+    .projects-tags-and-source {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1.5rem;
+    }
+
+    .projects-tags {
+        gap: 0.6rem;
+    }
+
+    .projects-tag {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+    }
+
+    .projects-source-link {
+        align-self: center;
+        font-size: 0.8rem;
+        padding: 0.5rem 1rem;
+        max-width: 150px;
+    }
+
+    .projects-grid {
+        gap: 3rem;
+        margin-top: 3rem;
+    }
+
+    .projects-card::before {
+        width: 100%;
+        height: 5px;
+        top: 0;
+        left: 0;
+        background: linear-gradient(90deg, var(--projects-solo-blue), var(--projects-solo-purple), var(--projects-solo-blue));
+        background-size: 300% 100%;
+        background-position: 0% 0%;
+    }
+}
+
+/* Small mobile devices (Pixel 3a, iPhone SE, etc.) */
+@media (max-width: 576px) {
+    .projects-container {
+        padding: 0 0.75rem;
+    }
+    
+    .projects-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+        margin-top: 2rem;
+    }
+
+    .projects-card {
+        max-width: 100%;
+        margin: 0;
+    }
+
+    .projects-main-content {
+        padding: 20px 15px 30px 15px;
+    }
+
+    .projects-square-container {
+        height: 320px;
+        margin-bottom: 25px;
+        min-height: 280px;
+    }
+
+    /* Scale down decorative elements for very small screens */
+    .projects-square-circle {
+        width: 260px;
+        height: 260px;
+    }
+
+    .projects-square-circle::before {
+        width: 220px;
+        height: 220px;
+    }
+
+    .projects-square-circle::after {
+        width: 140px;
+        height: 140px;
+    }
+
+    /* Adjust shapes for very small screens */
+    .projects-square.projects-shape-square {
+        width: 240px;
+        height: 240px;
+    }
+
+    .projects-square.projects-shape-vertical {
+        width: 160px;
+        height: 240px;
+    }
+
+    .projects-square.projects-shape-horizontal {
+        width: 260px;
+        height: 160px;
+    }
+
+    /* Adjust shadows for very small screens */
+    .projects-square-shadow {
+        width: 220px;
+        height: 35px;
+    }
+
+    .projects-square-shadow.projects-shadow-vertical {
+        width: 140px;
+        height: 40px;
+    }
+
+    .projects-square-shadow.projects-shadow-horizontal {
+        width: 240px;
+        height: 30px;
+    }
+
+    .projects-info {
+        padding: 1.2rem;
+        min-height: 250px;
+    }
+
+    .projects-title {
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+    }
+
+    .projects-description {
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+        line-height: 1.6;
+    }
+
+    .projects-tags {
+        gap: 0.5rem;
+    }
+
+    .projects-tag {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.75rem;
+    }
+
+    .projects-source-link {
+        font-size: 0.75rem;
+        padding: 0.4rem 0.8rem;
+        max-width: 120px;
+    }
+
+    .projects-tags-and-source {
+        padding-top: 1rem;
+        gap: 1rem;
+    }
+}
+
+/* Extra small devices (Galaxy Fold, very narrow screens) */
+@media (max-width: 400px) {
+    .projects-container {
+        padding: 0 0.5rem;
+    }
+    
+    .projects-main-content {
+        padding: 15px 10px 25px 10px;
+    }
+
+    .projects-square-container {
+        height: 280px;
+        margin-bottom: 20px;
+        min-height: 250px;
+    }
+
+    /* Further scale down for extra small screens */
+    .projects-square-circle {
+        width: 220px;
+        height: 220px;
+    }
+
+    .projects-square-circle::before {
+        width: 180px;
+        height: 180px;
+    }
+
+    .projects-square-circle::after {
+        width: 120px;
+        height: 120px;
+    }
+
+    /* Minimal shapes for extra small screens */
+    .projects-square.projects-shape-square {
+        width: 200px;
+        height: 200px;
+    }
+
+    .projects-square.projects-shape-vertical {
+        width: 130px;
+        height: 200px;
+    }
+
+    .projects-square.projects-shape-horizontal {
+        width: 220px;
+        height: 140px;
+    }
+
+    /* Minimal shadows */
+    .projects-square-shadow {
+        width: 180px;
+        height: 30px;
+    }
+
+    .projects-square-shadow.projects-shadow-vertical {
+        width: 110px;
+        height: 35px;
+    }
+
+    .projects-square-shadow.projects-shadow-horizontal {
+        width: 200px;
+        height: 25px;
+    }
+
+    .projects-info {
+        padding: 1rem;
+        min-height: 220px;
+    }
+
+    .projects-title {
+        font-size: 1.2rem;
+        margin-bottom: 0.8rem;
+        letter-spacing: 0.5px;
+    }
+
+    .projects-description {
+        font-size: 0.85rem;
+        line-height: 1.5;
+        margin-bottom: 0.8rem;
+    }
+
+    .projects-tag {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.7rem;
+    }
+
+    .projects-source-link {
+        font-size: 0.7rem;
+        padding: 0.35rem 0.7rem;
+        max-width: 100px;
+    }
+
+    .projects-tags-and-source {
+        padding-top: 0.8rem;
+        gap: 0.8rem;
+    }
+}
+
+/* Performance optimizations for mobile */
+@media (max-width: 768px) {
+    .projects-card::after {
+        animation: none; /* Disable complex animations on mobile for better performance */
+    }
+    
+    .projects-square-circle {
+        animation-duration: 6s; /* Slower animations for better performance */
+    }
+    
+    /* Reduce shadow complexity on mobile */
+    .projects-square-shadow {
+        filter: blur(4px);
+    }
+}
+
+/* Landscape orientation optimizations for mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+    .projects-main-content {
+        flex-direction: row;
+        padding: 20px;
+    }
+
+    .projects-square-container {
+        width: 60%;
         height: 300px;
+        margin-right: 20px;
+        margin-bottom: 0;
+    }
+
+    .projects-info {
+        width: 40%;
+        min-height: 260px;
+    }
+
+    .projects-square.projects-shape-square {
+        width: 220px;
+        height: 220px;
+    }
+
+    .projects-square.projects-shape-vertical {
+        width: 150px;
+        height: 220px;
+    }
+
+    .projects-square.projects-shape-horizontal {
+        width: 240px;
+        height: 150px;
+    }
+
+    .projects-square-circle {
+        width: 240px;
+        height: 240px;
+    }
+
+    .projects-square-circle::before {
+        width: 200px;
+        height: 200px;
+    }
+
+    .projects-square-circle::after {
+        width: 130px;
+        height: 130px;
+    }
+}
+
+/* High DPI / Retina display optimizations */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .projects-square img {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+    .projects-square,
+    .projects-square-circle,
+    .projects-square-shadow,
+    .projects-card::after,
+    .projects-card::before {
+        animation: none !important;
+    }
+    
+    .projects-square {
+        transform: translate(-50%, -50%) !important;
+    }
+}
+
+/* Focus states for keyboard navigation */
+.projects-source-link:focus {
+    outline: 2px solid var(--projects-solo-blue);
+    outline-offset: 2px;
+}
+
+/* Touch-friendly adjustments */
+@media (pointer: coarse) {
+    .projects-source-link {
+        min-height: 44px; /* Minimum touch target size */
+        min-width: 44px;
     }
 }
